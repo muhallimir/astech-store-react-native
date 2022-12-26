@@ -11,6 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+
   return (
     <SafeAreaView className="bg-white">
       <Header />

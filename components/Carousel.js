@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Image } from 'react-native'
 import React from 'react'
 import Carousel from 'simple-carousel-react-native';
 import Carousel2 from "../assets/images/carousel2.jpg";
