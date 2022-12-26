@@ -1,11 +1,9 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import PropTypes from 'prop-types';
-// import { StarIcon } from 'react-native-heroicons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
-
 
 export default function Rating({ rating, numReviews }) {
     return (
@@ -27,7 +25,6 @@ export default function Rating({ rating, numReviews }) {
                     rating >= 5 ? { color: '#f8e825' } : rating >= 4.5 ? { color: '#f8e825' } : { color: '#f8e825' }
                 } />
             </View>
-            {/* add numReviews and caption */}
             <Text className='text-sm text-gray-500 ml-2'>{numReviews} reviews </Text>
         </View>
     )

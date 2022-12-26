@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import Spinner from 'react-native-loading-spinner-overlay';
+import PropTypes from 'prop-types';
 
 
 export default function Loader({ loading }) {
@@ -11,8 +12,17 @@ export default function Loader({ loading }) {
                 textContent={'please wait...'}
                 className='text-white'
             />
-
         </View>
     )
 }
+
+Loader.propTypes = {
+    loading: PropTypes.bool,
+}
+
+Loader.defaultProps = {
+    loading: false,
+}
+
+
 
