@@ -1,11 +1,19 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
 
 export default function Rating({ rating, numReviews }) {
+    const [isReviewer, setIsReviewer] = useState(true)
+
+    useEffect(() => {
+        if (numReviews > 0) {
+            setIsReviewer(false)
+        }
+    }, [numReviews])
+
     return (
         <View className='flex flex-row items-center'>
             <View className='flex flex-row items-center'>
@@ -25,7 +33,7 @@ export default function Rating({ rating, numReviews }) {
                     rating >= 5 ? { color: '#f8e825' } : rating >= 4.5 ? { color: '#f8e825' } : { color: '#f8e825' }
                 } />
             </View>
-            <Text className='text-sm text-gray-500 ml-2'>{numReviews} reviews </Text>
+            {!isReviewer && <Text className='text-sm text-gray-500 ml-2'>{numReviews} reviews </Text>}
         </View>
     )
 }

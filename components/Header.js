@@ -1,8 +1,6 @@
 import { Image, Text, View } from 'react-native'
 import Logo from "../assets/images/Logo.png";
-import {
-    SearchIcon,
-} from "react-native-heroicons/outline";
+import { SearchIcon } from "react-native-heroicons/outline";
 import { ShoppingCartIcon } from "react-native-heroicons/solid";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
@@ -21,19 +19,19 @@ const Header = () => {
                 <TouchableOpacity onPress={() => navigateToHome()}>
                     <Image source={Logo} className="h-7 w-32 object-contain ml-1 mt-1 mr-2" />
                 </TouchableOpacity>
-                <View className='flex-column items-center'>
+                <View className='items-center'>
                     <Text className='text-white text-xs'>Hello</Text>
                     <TouchableOpacity>
                         <Text className='text-white font-bold'>Sign in</Text>
                     </TouchableOpacity>
                 </View>
-                <View className='flex-column items-center'>
+                <View className='items-center'>
                     <Text className='text-white text-xs'>Manage</Text>
                     <TouchableOpacity>
                         <Text className='text-white font-bold'>Profile</Text>
                     </TouchableOpacity>
                 </View>
-                <View className='flex-column items-center'>
+                <View className='items-center'>
                     <Text className='text-white text-xs'>Admin</Text>
                     <TouchableOpacity>
                         <Text className='text-white font-bold'>Access</Text>
