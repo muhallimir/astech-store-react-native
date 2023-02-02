@@ -1,4 +1,4 @@
-import { Text, View, Image, TextInput, FlatList } from 'react-native'
+import { Text, View, Image, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { detailsProduct } from '../actions/productActions';
@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import Rating from '../components/Rating';
 import CTA from '../components/CTA';
 import moment from 'moment/moment';
+import { addToCart } from '../actions/cartActions';
 
 
 
@@ -19,10 +20,9 @@ export default function ProductScreen() {
     const productDetails = useSelector((state) => state.productDetails);
     const { loading, error, product } = productDetails;
     const [userInfo, setUserInfo] = useState(false); //temporary condition
+    const [qty, setQty] = useState(1);
 
     const dateCreated = moment(product?.createdAt).format('YYYY-MM-DD');
-
-    console.log('product', product);
 
 
     // const [qty, setQty] = useState(1);
@@ -60,9 +60,10 @@ export default function ProductScreen() {
     //     }
     // };
 
-    // const handleAddtoCart = () => {
-    //     dispatch(addToCart(product._id, qty));
-    // };
+    const handleAddToCart = () => {
+        dispatch(addToCart(product._id, qty));
+        console.log('Added to cart');
+    };
 
     // const handleBuyNow = () => {
     //     props.history.push(`/cart/${productId}?qty=${qty}`);
@@ -120,7 +121,7 @@ export default function ProductScreen() {
                     </ScrollView>
                 }
             </SafeAreaView>
-            <CTA />
+            <CTA handleAddToCart={handleAddToCart} />
         </>
     )
 }

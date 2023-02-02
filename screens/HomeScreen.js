@@ -7,10 +7,7 @@ import Carousel from "../components/Carousel";
 import Products from "../components/Products";
 import { ScrollView } from "react-native-gesture-handler";
 
-
-
 const HomeScreen = () => {
-  const navigation = useNavigation();
 
   return (
     <SafeAreaView className="bg-white">

@@ -1,16 +1,22 @@
-import { Image, Text, View } from 'react-native'
+import { Image, SafeAreaView, Text, View } from 'react-native'
 import Logo from "../assets/images/Logo.png";
 import { SearchIcon } from "react-native-heroicons/outline";
 import { ShoppingCartIcon } from "react-native-heroicons/solid";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
+import { useSelector } from 'react-redux';
 
 
 const Header = () => {
     const navigation = useNavigation();
+    const { cartItems } = useSelector(state => state.cart);
 
     const navigateToHome = () => {
         navigation.navigate('Home')
+    }
+
+    const navigateToCart = () => {
+        navigation.navigate('CartScreen')
     }
 
     return (
@@ -38,7 +44,8 @@ const Header = () => {
                     </TouchableOpacity>
                 </View>
                 <View className='pt-0.5'>
-                    <TouchableOpacity>
+                    {cartItems.length > 0 && <Text className='absolute z-10 left-8 bottom-6 text-xs text-white font-bold'>{cartItems.length}</Text>}
+                    <TouchableOpacity onPress={() => navigateToCart()}>
                         <ShoppingCartIcon size={32} color='white' />
                     </TouchableOpacity>
                 </View>
