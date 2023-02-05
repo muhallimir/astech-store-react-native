@@ -8736,10 +8736,10 @@ react-currency-formatter@^1.1.0:
   dependencies:
     prop-types "^15.6.0"
 
-react-devtools-core@4.27.1, react-devtools-core@^4.23.0:
-  version "4.27.1"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.27.1.tgz#167aa174383c65786cbb7e965a5b39c702f0a2d3"
-  integrity sha512-qXhcxxDWiFmFAOq48jts9YQYe1+wVoUXzJTlY4jbaATzyio6dd6CUGu3dXBhREeVgpZ+y4kg6vFJzIOZh6vY2w==
+react-devtools-core@4.27.1, react-devtools-core@^4.23.0, react-devtools-core@~4.25.0:
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.25.0.tgz#78b11a2c9f81dd9ebff3745ab4ee2147cc96c12a"
+  integrity sha512-iewRrnu0ZnmfL+jJayKphXj04CFh6i3ezVnpCtcnZbTPSQgN09XqHAzXbKbqNDl7aTg9QLNkQRP6M3DvdrinWA==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -8801,6 +8801,11 @@ react-native-codegen@^0.0.17:
     flow-parser "^0.121.0"
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
+
+react-native-form-component@^2.6.8:
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/react-native-form-component/-/react-native-form-component-2.6.8.tgz#ae45be93c08153b2a55117c2e1d0547b98ba8ef2"
+  integrity sha512-BDlCJCmKsMpGwrTdCKvt/fUp+vzWwJK8yuiBKQJt77Tf5W90VF1l+YY2JndzpAU/DuTbnII0LK4aGgl8CT+sxw==
 
 react-native-gesture-handler@~2.2.1:
   version "2.2.1"

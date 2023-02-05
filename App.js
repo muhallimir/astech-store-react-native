@@ -5,6 +5,8 @@ import { TailwindProvider } from 'tailwindcss-react-native';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import SignInScreen from './screens/SignInScreen';
 import store from './store';
 
 
@@ -21,6 +23,8 @@ export default function App() {
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="ProductScreen" component={ProductScreen} />
               <Stack.Screen name="CartScreen" component={CartScreen} />
+              <Stack.Screen name="SignIn" component={SignInScreen} />
+              <Stack.Screen name="Register" component={RegisterScreen} />
             </Stack.Group>
           </Stack.Navigator>
         </TailwindProvider>

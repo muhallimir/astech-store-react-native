@@ -20,7 +20,7 @@ export default function Products() {
 
     return (
         <SafeAreaView className="flex-1">
-            {loading ? <Loader loading={loading} /> : error ? <Text className='text-black font-bold'>{error}</Text> : <ProductCard products={products} />}
+            {loading ? <Loader loading={loading} /> : error ? <Text className='text-red font-bold'>{error}</Text> : <ProductCard products={products} />}
         </SafeAreaView >
     )
 }

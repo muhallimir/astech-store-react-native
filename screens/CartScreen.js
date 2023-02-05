@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../actions/cartActions'

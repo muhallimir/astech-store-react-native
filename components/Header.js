@@ -1,15 +1,20 @@
-import { Image, SafeAreaView, Text, View } from 'react-native'
+import { Image, Text, View, Modal } from 'react-native'
 import Logo from "../assets/images/Logo.png";
 import { SearchIcon } from "react-native-heroicons/outline";
 import { ShoppingCartIcon } from "react-native-heroicons/solid";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut } from '../actions/userActions';
+import { useState } from 'react';
+import WarningModal from './modals/WarningModal';
 
 
 const Header = () => {
+    const dispatch = useDispatch();
     const navigation = useNavigation();
-    const { cartItems } = useSelector(state => state.cart);
+    const { cart: { cartItems }, userSignIn: { userInfo } } = useSelector((state) => state);
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
     const navigateToHome = () => {
         navigation.navigate('Home')
@@ -19,17 +24,29 @@ const Header = () => {
         navigation.navigate('CartScreen')
     }
 
+    const navigateToSignIn = () => {
+        navigation.navigate('SignIn')
+    }
+
+    const handleSignOut = () => {
+        dispatch(signOut());
+        navigation.navigate('SignIn')
+    }
+
     return (
-        <View className='flex-1 bg-blue-900 py-2'>
-            <View className='flex-row space-x-3'>
+        <>
+            <WarningModal message={'This will sign you out. Would you like to continue?'} handleSignOut={handleSignOut} setIsOpenModal={setIsOpenModal} isOpenModal={isOpenModal} />
+            <View className='flex-row bg-blue-900 py-2 h-12 justify-center items-center space-x-2'>
                 <TouchableOpacity onPress={() => navigateToHome()}>
                     <Image source={Logo} className="h-7 w-32 object-contain ml-1 mt-1 mr-2" />
                 </TouchableOpacity>
                 <View className='items-center'>
                     <Text className='text-white text-xs'>Hello</Text>
-                    <TouchableOpacity>
+                    {userInfo?.name ? (<TouchableOpacity onPress={() => setIsOpenModal(true)}>
+                        <Text className='text-white font-bold'>{userInfo?.name}</Text>
+                    </TouchableOpacity>) : (<TouchableOpacity onPress={navigateToSignIn}>
                         <Text className='text-white font-bold'>Sign in</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>)}
                 </View>
                 <View className='items-center'>
                     <Text className='text-white text-xs'>Manage</Text>
@@ -55,7 +72,7 @@ const Header = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </>
     )
 }
 
