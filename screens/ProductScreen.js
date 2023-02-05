@@ -1,29 +1,30 @@
-import { Text, View, Image, TextInput } from 'react-native'
+import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { detailsProduct } from '../actions/productActions';
+import { createReview, detailsProduct } from '../actions/productActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../components/Loader';
 import Rating from '../components/Rating';
 import CTA from '../components/CTA';
 import moment from 'moment/moment';
 import { addToCart } from '../actions/cartActions';
-
-
+import { Rating as StarRate } from 'react-native-ratings';
 
 export default function ProductScreen() {
+    const navigation = useNavigation();
     const dispatch = useDispatch();
     const { params: { productId } } = useRoute();
     const productDetails = useSelector((state) => state.productDetails);
+    const { userInfo } = useSelector((state) => state.userSignIn);
     const { loading, error, product } = productDetails;
-    const [userInfo, setUserInfo] = useState(false); //temporary condition
     const [qty, setQty] = useState(1);
+    const [rating, setRating] = useState(5);
+    const [comment, setComment] = useState("");
 
     const dateCreated = moment(product?.createdAt).format('YYYY-MM-DD');
-
 
     // const [qty, setQty] = useState(1);
     //   const userSignin = useSelector((state) => state.userSignin);
@@ -35,8 +36,7 @@ export default function ProductScreen() {
     //     success: successReviewCreate,
     //   } = productReviewCreate;
 
-    // const [rating, setRating] = useState(0);
-    // const [comment, setComment] = useState("");
+
 
     useEffect(() => {
         // if (successReviewCreate) {
@@ -46,30 +46,29 @@ export default function ProductScreen() {
         //   dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
         // }
         dispatch(detailsProduct(productId));
+        console.log(rating);
         //   }, [dispatch, productId, successReviewCreate]);
     }, [dispatch, productId]);
 
-    // const submitHandler = (e) => {
-    //     e.preventDefault();
-    //     if (comment && rating) {
-    //         dispatch(
-    //             createReview(productId, { rating, comment, name: userInfo.name })
-    //         );
-    //     } else {
-    //         alert("Please enter comment and rating");
-    //     }
-    // };
+    const handleSubmit = (e) => {
+        if (comment && rating) {
+            dispatch(
+                createReview(productId, { rating, comment, name: userInfo.name })
+            );
+        } else {
+            alert("Please enter comment and rating");
+        }
+    };
 
     const handleAddToCart = () => {
         dispatch(addToCart(product._id, qty));
-        console.log('Added to cart');
     };
 
-    // const handleBuyNow = () => {
-    //     props.history.push(`/cart/${productId}?qty=${qty}`);
-    //     dispatch(addToCart(productId));
-    //     dispatch(addToCart(product._id, qty));
-    // };
+    const onFinishRatingPress = (rating) => {
+        setRating(rating);
+        console.log(rating);
+    };
+
 
     return (
         <>
@@ -104,18 +103,20 @@ export default function ProductScreen() {
                                 ))}
                             </View>
                         </View>
-                        <View className='flex gap-2 pl-4 py-3'>
-                            <Text className="text-2xl font-bold">Write a Customer Review</Text>
-                        </View>
-                        <View className='flex gap-2 pl-4 pb-36'>
+                        <Text className="text-2xl font-bold pl-2 pt-1">Leave a review</Text>
+                        <View className='flex gap-1 pb-36'>
                             {userInfo ? (
-                                <View className='flex gap-2 pl-4 py-3'>
-                                    <Rating rating={rating} setRating={setRating} />
+                                <View className='flex gap-2 pl-1 py-3'>
+                                    <View className='flex-row left-0'>
+                                        <StarRate startingValue={5} defaultRating={5} imageSize={30} onFinishRating={onFinishRatingPress} />
+                                    </View>
                                     <TextInput placeholder="Enter comment" className="border border-gray-300 rounded-md p-2" value={comment} onChangeText={(e) => setComment(e)} />
-                                    <Button title="Submit" onPress={submitHandler} />
+                                    <TouchableOpacity onPress={handleSubmit} >
+                                        <Text className="text-blue-500 text-lg font-bold pl-2">Submit</Text>
+                                    </TouchableOpacity>
                                 </View>
                             ) : (
-                                <Text>Please <Text className="text-blue-500 font-bold" onPress={() => props.navigation.navigate('Login')}>Sign In</Text> to write a review</Text>
+                                <Text>Please <Text className="text-blue-500 font-bold" onPress={() => navigation.navigate('SignIn')}>Sign In</Text> to write a review</Text>
                             )}
                         </View>
                     </ScrollView>
