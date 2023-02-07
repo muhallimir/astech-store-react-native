@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../actions/cartActions'
-import { DocumentRemoveIcon } from "react-native-heroicons/solid";
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header';

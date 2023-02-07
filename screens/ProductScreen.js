@@ -17,7 +17,7 @@ export default function ProductScreen() {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const { params: { productId } } = useRoute();
-    const productDetails = useSelector((state) => state.productDetails);
+    const { productDetails, cart: { cartItems } } = useSelector((state) => state);
     const { userInfo } = useSelector((state) => state.userSignIn);
     const { loading, error, product } = productDetails;
     const [qty, setQty] = useState(1);
@@ -25,6 +25,9 @@ export default function ProductScreen() {
     const [comment, setComment] = useState("");
 
     const dateCreated = moment(product?.createdAt).format('YYYY-MM-DD');
+    const inCart = cartItems.find((item) => item.product === productId) ? true : false;
+
+    console.log('inCart', inCart);
 
     // const [qty, setQty] = useState(1);
     //   const userSignin = useSelector((state) => state.userSignin);
@@ -66,7 +69,6 @@ export default function ProductScreen() {
 
     const onFinishRatingPress = (rating) => {
         setRating(rating);
-        console.log(rating);
     };
 
 
@@ -122,7 +124,7 @@ export default function ProductScreen() {
                     </ScrollView>
                 }
             </SafeAreaView>
-            <CTA handleAddToCart={handleAddToCart} />
+            <CTA handleAddToCart={handleAddToCart} inCart={inCart} />
         </>
     )
 }

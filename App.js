@@ -2,10 +2,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from "react-redux";
 import { TailwindProvider } from 'tailwindcss-react-native';
+import Header from './components/Header';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
+import PaymentScreen from './screens/PaymentScreen';
 import ProductScreen from './screens/ProductScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ShippingScreen from './screens/ShippingScreen';
 import SignInScreen from './screens/SignInScreen';
 import store from './store';
 
@@ -25,6 +28,8 @@ export default function App() {
               <Stack.Screen name="CartScreen" component={CartScreen} />
               <Stack.Screen name="SignIn" component={SignInScreen} />
               <Stack.Screen name="Register" component={RegisterScreen} />
+              <Stack.Screen name="Shipping" component={ShippingScreen} />
+              <Stack.Screen name="Payment" component={PaymentScreen} />
             </Stack.Group>
           </Stack.Navigator>
         </TailwindProvider>
