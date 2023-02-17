@@ -3,7 +3,8 @@ import thunk from "redux-thunk";
 import { productDetailsReducer, productListReducer } from "../reducers/productReducers";
 import { cartReducer } from "../reducers/cartReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { userSignInReducer } from "../reducers/userReducer";
+import { userDetailsReducer, userRegisterReducer, userSignInReducer } from "../reducers/userReducer";
+import { orderCreateReducer, orderSummaryReducer } from "../reducers/orderReducer";
 
 
 const initialState = {
@@ -36,6 +37,10 @@ const reducer = combineReducers({
   productDetails: productDetailsReducer,
   cart: cartReducer,
   userSignIn: userSignInReducer,
+  userRegister: userRegisterReducer,
+  orderCreate: orderCreateReducer,
+  userDetails: userDetailsReducer,
+  orderSummary: orderSummaryReducer,
 });
 
 

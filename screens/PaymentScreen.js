@@ -4,13 +4,19 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../components/Header'
 import { RadioButton } from 'react-native-paper';
 import OrderStepper from '../components/OrderStepper';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { savePaymentMethod } from '../actions/cartActions';
 
 
 const PaymentScreen = () => {
     const [checked, setChecked] = useState('Paypal');
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     const checkoutHandler = () => {
-        console.log('Checkout');
+        dispatch(savePaymentMethod(checked));
+        navigation.navigate('PlaceOrder');
     }
 
     return (
