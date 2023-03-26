@@ -29,10 +29,16 @@ const Header = () => {
         navigation.navigate('SignIn')
     }
 
+    const navigateToOrderHistory = () => {
+        navigation.navigate('OrderHistory')
+    }
+
     const handleSignOut = () => {
         dispatch(signOut());
         navigation.navigate('SignIn')
     }
+
+
 
     return (
         <>
@@ -62,8 +68,8 @@ const Header = () => {
                     </TouchableOpacity>
                 </View> :
                     <View className='items-center'>
-                        <Text className='text-white text-xs'>Orders</Text>
-                        <TouchableOpacity>
+                        <Text className='text-white text-xs'>Order</Text>
+                        <TouchableOpacity onPress={() => navigateToOrderHistory()}>
                             <Text className='text-white font-bold'>History</Text>
                         </TouchableOpacity>
                     </View>

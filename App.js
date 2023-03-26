@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { TailwindProvider } from 'tailwindcss-react-native';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
+import OrderHitoryScreen from './screens/OrderHitoryScreen';
 import OrderStatusScreen from './screens/OrderStatusScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
@@ -33,6 +34,7 @@ export default function App() {
               <Stack.Screen name="Payment" component={PaymentScreen} />
               <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
               <Stack.Screen name="/order/:id" component={OrderStatusScreen} />
+              <Stack.Screen name="OrderHistory" component={OrderHitoryScreen} />
             </Stack.Group>
           </Stack.Navigator>
         </TailwindProvider>

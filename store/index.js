@@ -4,7 +4,7 @@ import { productDetailsReducer, productListReducer } from "../reducers/productRe
 import { cartReducer } from "../reducers/cartReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { userDetailsReducer, userRegisterReducer, userSignInReducer } from "../reducers/userReducer";
-import { orderCreateReducer, orderSummaryReducer } from "../reducers/orderReducer";
+import { myPurchaseReducer, orderCreateReducer, orderListReducer, orderSummaryReducer } from "../reducers/orderReducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialState = {
@@ -41,6 +41,8 @@ const reducer = combineReducers({
   orderCreate: orderCreateReducer,
   userDetails: userDetailsReducer,
   orderSummary: orderSummaryReducer,
+  orderList: orderListReducer,
+  myPurchase: myPurchaseReducer,
 });
 
 const store = createStore(
