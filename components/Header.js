@@ -15,6 +15,7 @@ const Header = () => {
     const navigation = useNavigation();
     const { cart: { cartItems }, userSignIn: { userInfo } } = useSelector((state) => state);
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const isAdmin = userInfo?.isAdmin;
 
     const navigateToHome = () => {
         navigation.navigate('Home')
@@ -54,12 +55,19 @@ const Header = () => {
                         <Text className='text-white font-bold'>Profile</Text>
                     </TouchableOpacity>
                 </View>
-                <View className='items-center'>
+                {isAdmin ? <View className='items-center'>
                     <Text className='text-white text-xs'>Admin</Text>
                     <TouchableOpacity>
                         <Text className='text-white font-bold'>Access</Text>
                     </TouchableOpacity>
-                </View>
+                </View> :
+                    <View className='items-center'>
+                        <Text className='text-white text-xs'>Orders</Text>
+                        <TouchableOpacity>
+                            <Text className='text-white font-bold'>History</Text>
+                        </TouchableOpacity>
+                    </View>
+                }
                 <View className='pt-0.5'>
                     {cartItems.length > 0 && <Text className='absolute z-10 left-8 bottom-6 text-xs text-white font-bold'>{cartItems.length}</Text>}
                     <TouchableOpacity onPress={() => navigateToCart()}>

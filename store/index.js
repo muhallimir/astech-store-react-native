@@ -1,11 +1,11 @@
-import { applyMiddleware, combineReducers, compose, createStore } from "@reduxjs/toolkit";
+import { applyMiddleware, combineReducers, createStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { productDetailsReducer, productListReducer } from "../reducers/productReducers";
 import { cartReducer } from "../reducers/cartReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { userDetailsReducer, userRegisterReducer, userSignInReducer } from "../reducers/userReducer";
 import { orderCreateReducer, orderSummaryReducer } from "../reducers/orderReducer";
-
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialState = {
   userSignIn: {
@@ -43,13 +43,12 @@ const reducer = combineReducers({
   orderSummary: orderSummaryReducer,
 });
 
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 const store = createStore(
   reducer,
   initialState,
-  composeEnhancers(applyMiddleware(thunk))
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
 );
 
 export default store;
