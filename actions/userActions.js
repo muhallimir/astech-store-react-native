@@ -1,10 +1,6 @@
 import Axios from "axios";
-import { View } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { USER_DELETE_FAILED, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_LIST_FAILED, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNOUT, USER_UPDATE_FAILED, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS } from "../constants/userConstants";
-import { WebView } from 'react-native-webview';
-import { useRef } from "react";
-
 
 export const signIn = (email, password) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
@@ -156,42 +152,3 @@ export const updateUser = (user) => async (dispatch, getState) => {
         dispatch({ type: USER_UPDATE_FAILED, payload: message });
     }
 };
-
-
-// export const signInWeb = (token) => async (dispatch) => {
-//     try {
-//         // Set the user token in the local storage of the WebView
-//         const setTokenScript = `
-//         (function() {
-//           localStorage.setItem('token', '${token}');
-//           window.ReactNativeWebView.postMessage('login_success');
-//         })();
-//       `;
-//         const webViewRef = useRef(null);
-//         const handleWebViewNavigation = useCallback((event) => {
-//             if (event.url.startsWith('https://astech-store.onrender.com/order/')) {
-//                 webViewRef.current.stopLoading();
-//                 navigateToOrderDetails(event.url);
-//             }
-//         }, []);
-
-//         return (
-//             <View style={{ flex: 1 }}>
-//                 <WebView
-//                     ref={webViewRef}
-//                     source={{ uri: 'https://astech-store.onrender.com/' }}
-//                     onNavigationStateChange={handleWebViewNavigation}
-//                     injectedJavaScript={setTokenScript}
-//                 />
-//             </View>
-//         );
-//     } catch (error) {
-//         dispatch({
-//             type: USER_SIGNIN_FAIL,
-//             payload:
-//                 error.response && error.response.data.message
-//                     ? error.response.data.message
-//                     : error.message,
-//         });
-//     }
-// };

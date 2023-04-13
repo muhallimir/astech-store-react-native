@@ -5,7 +5,6 @@ import { TailwindProvider } from 'tailwindcss-react-native';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderHitoryScreen from './screens/OrderHitoryScreen';
-import OrderStatusScreen from './screens/OrderStatusScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductScreen from './screens/ProductScreen';
@@ -13,6 +12,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ShippingScreen from './screens/ShippingScreen';
 import SignInScreen from './screens/SignInScreen';
 import store from './store';
+import { WebviewScreen } from './screens/WebViewScreen';
 
 
 export default function App() {
@@ -33,8 +33,8 @@ export default function App() {
               <Stack.Screen name="Shipping" component={ShippingScreen} />
               <Stack.Screen name="Payment" component={PaymentScreen} />
               <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
-              <Stack.Screen name="/order/:id" component={OrderStatusScreen} />
               <Stack.Screen name="OrderHistory" component={OrderHitoryScreen} />
+              <Stack.Screen name="WebView" component={WebviewScreen} />
             </Stack.Group>
           </Stack.Navigator>
         </TailwindProvider>

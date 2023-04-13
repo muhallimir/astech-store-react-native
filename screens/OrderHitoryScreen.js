@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Linking } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../components/Header'
@@ -7,11 +7,12 @@ import { myOrderHistory } from '../actions/orderActions';
 import Loader from '../components/Loader';
 import { Table, Row } from 'react-native-table-component';
 import { useNavigation } from '@react-navigation/native';
-import { signInWeb } from '../actions/userActions';
+import { navigateToWebviewScreen } from './WebViewScreen';
 
 export default function OrderHitoryScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    const { userInfo: { _id, name, email, isAdmin, token } } = useSelector(({ userSignIn }) => userSignIn);
     const myPurchase = useSelector((state) => state.myPurchase);
     const { error, loading, orders } = myPurchase;
 
@@ -20,17 +21,18 @@ export default function OrderHitoryScreen() {
         return date.toLocaleDateString();
     }
 
-    const navigateToOrderDetails = () => {
-        // const url = `https://astech-store.onrender.com/order/${id}?token=${token}`;
-        // Linking.openURL(url);
+    const handleWebView = (orderId) => {
+        navigateToWebviewScreen(navigation, { orderId, _id, name, email, isAdmin, token });
+        console.log('orderId:', orderId);
     }
+
 
     const tableData = orders?.map((order) => [
         orderDate(order),
         `$${order.totalPrice.toFixed(2)}`,
         order.isPaid ? order.paidAt : 'No',
         order.isDelivered ? order.deliveredAt : 'No',
-        <TouchableOpacity onPress={navigateToOrderDetails()}>
+        <TouchableOpacity onPress={() => handleWebView(order._id)} >
             <Text className='text-blue-500 font-bold'>Details</Text>
         </TouchableOpacity>
     ]);
@@ -58,7 +60,6 @@ export default function OrderHitoryScreen() {
                         ))}
                     </Table>}
             </View >
-
         </SafeAreaView >
     )
 }
