@@ -23,9 +23,7 @@ export default function OrderHitoryScreen() {
 
     const handleWebView = (orderId) => {
         navigateToWebviewScreen(navigation, { orderId, _id, name, email, isAdmin, token });
-        console.log('orderId:', orderId);
     }
-
 
     const tableData = orders?.map((order) => [
         orderDate(order),
@@ -40,8 +38,6 @@ export default function OrderHitoryScreen() {
     useEffect(() => {
         dispatch(myOrderHistory());
     }, [dispatch]);
-
-
 
     return (
         <SafeAreaView>
