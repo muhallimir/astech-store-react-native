@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -53,6 +53,8 @@ export default function ShippingScreen() {
             <OrderStepper step1 step2 />
             <KeyboardAwareScrollView
                 scrollEnabled={true}
+                contentContainerStyle={{ paddingBottom: 90 }}
+
             >
                 <View className='mx-2'>
                     <Form buttonStyle={{

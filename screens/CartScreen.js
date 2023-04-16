@@ -29,10 +29,6 @@ export default function CartScreen() {
         }
     };
 
-    const removeFromCartHandler = (id) => {
-        dispatch(removeFromCart(id));
-    };
-
     const checkoutHandler = () => {
         navigation.navigate('Shipping');
     };
@@ -41,7 +37,7 @@ export default function CartScreen() {
         <>
             <SafeAreaView>
                 <Header />
-                <ScrollView className='flex flex-col w-full'>
+                <ScrollView className='flex-1 h-full overflow-y-auto w-full'>
                     <View className='flex flex-row justify-between items-center p-3'>
                         <Text className='text-black font-bold text-lg'>Shopping Cart</Text>
                         <Text className='text-black font-bold text-lg'>{cartItems?.length} item(s)</Text>
@@ -55,7 +51,7 @@ export default function CartScreen() {
                                 </TouchableOpacity>
                             </View>
                         ) : (
-                            <View className='flex flex-col w-full'>
+                            <View className='flex flex-col w-full mb-28'>
                                 {cartItems?.map((item) => (
                                     <View className='flex-row justify-between items-center p-3' key={item?.product}>
                                         <View className='flex flex-row items-center'>
@@ -86,17 +82,19 @@ export default function CartScreen() {
                                         ${cartItems?.reduce((acc, item) => acc + item?.price * item?.qty, 0).toFixed(2)}
                                     </Text>
                                 </View>
-                                <TouchableOpacity
-                                    className='flex flex-row justify-center items-center bg-blue-900 p-3 mb-14'
-                                    onPress={checkoutHandler}
-                                >
-                                    <Text className='text-white font-bold text-2xl'>Proceed to Checkout</Text>
-                                </TouchableOpacity>
                             </View>
                         )}
                     </View>
 
                 </ScrollView>
+                <View className='absolute w-full bottom-12'>
+                    <TouchableOpacity
+                        className='bg-blue-900 p-3 items-center justify-center'
+                        onPress={checkoutHandler}
+                    >
+                        <Text className='text-white font-bold text-2xl'>Proceed to Checkout</Text>
+                    </TouchableOpacity>
+                </View>
             </SafeAreaView>
 
         </>

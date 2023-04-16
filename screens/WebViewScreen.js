@@ -1,21 +1,25 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ScrollView, RefreshControl } from 'react-native';
 import WebView from 'react-native-webview';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Header from '../components/Header';
 import { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import Loader from '../components/Loader';
+import { useRef } from 'react';
+import { useState } from 'react';
 
 function WebviewScreen({ route }) {
     const { url } = route?.params;
     const insets = useSafeAreaInsets();
     const navigation = useNavigation();
+    const webviewRef = useRef(null);
+    const scrollViewRef = useRef(null);
 
     const handleWebViewMessage = (event) => {
         if (event.nativeEvent.data === 'goBack') {
             navigation.goBack();
         }
-    }
+    };
 
     const webViewStyle = useMemo(
         () => ({
@@ -27,7 +31,18 @@ function WebviewScreen({ route }) {
 
     return (
         <View style={{ flex: 1, marginTop: 45, marginBottom: 5 }}>
-            <WebView source={{ uri: url }} style={webViewStyle} onMessage={handleWebViewMessage} />
+            <ScrollView
+                ref={scrollViewRef}
+                contentContainerStyle={{ flexGrow: 1 }}
+                scrollEventThrottle={16}
+            >
+                <WebView
+                    ref={webviewRef}
+                    source={{ uri: url }}
+                    style={webViewStyle}
+                    onMessage={handleWebViewMessage}
+                />
+            </ScrollView>
         </View>
     );
 }

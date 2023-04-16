@@ -42,7 +42,7 @@ export default function OrderHitoryScreen() {
     return (
         <SafeAreaView>
             <Header />
-            <View>
+            <View className='flex flex-column justify-between w-full'>
                 {loading ? <Loader loading={loading} /> : error ? <Text className='text-red font-bold'>{error}</Text> :
                     <Table>
                         <Row data={['Date', 'Total', 'Paid', 'Delivered', 'Action']} className='flex-row justify-between items-center text-center bg-gray-200 p-2' textStyle='font-bold' />

@@ -34,6 +34,13 @@ export default function App() {
               <Stack.Screen name="Payment" component={PaymentScreen} />
               <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
               <Stack.Screen name="OrderHistory" component={OrderHitoryScreen} />
+            </Stack.Group>
+            <Stack.Group
+              screenOptions={{
+                headerShown: false,
+                presentation: "modal",
+              }}
+            >
               <Stack.Screen name="WebView" component={WebviewScreen} />
             </Stack.Group>
           </Stack.Navigator>
