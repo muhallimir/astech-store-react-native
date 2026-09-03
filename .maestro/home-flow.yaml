@@ -1,0 +1,42 @@
+appId: com.amirsali.astechstore
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Search products"
+    timeout: 30000
+- takeScreenshot: ast-astech-home
+- assertVisible: "All"
+- assertVisible: "Electronics"
+- assertVisible: "Gaming"
+- assertVisible: "Shirts"
+- assertVisible: "Pants"
+- extendedWaitUntil:
+    visible: "Acer Nitro 5, $ 875.05"
+    timeout: 15000
+- assertVisible: "Acer Nitro 5, $ 875.05"
+- assertVisible: "Acer Predator Helios, $ 1325.29"
+- assertVisible: "Adidas Premium Pants, $ 150"
+- assertVisible: "Adidas Stripe Shirt, $ 140"
+- takeScreenshot: ast-astech-grid
+- tapOn:
+    text: "Electronics"
+- extendedWaitUntil:
+    visible: "Acer Nitro 5, $ 875.05"
+    timeout: 5000
+- takeScreenshot: ast-astech-electronics
+- tapOn:
+    text: "Pants"
+- extendedWaitUntil:
+    visible: "Adidas Premium Pants, $ 150"
+    timeout: 5000
+- takeScreenshot: ast-astech-pants
+- tapOn:
+    text: "All"
+- tapOn: "Search products"
+- inputText: "Asus"
+- extendedWaitUntil:
+    visible: "ASUS ROG Strix Sca..., $ 799.59"
+    timeout: 5000
+- assertVisible: "ASUS ROG Strix Sca..., $ 799.59"
+- takeScreenshot: ast-astech-search
