@@ -13,7 +13,7 @@ import WarningModal from './modals/WarningModal';
 const Header = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const { cart: { cartItems }, userSignIn: { userInfo } } = useSelector((state) => state);
+    const { cart: { cartItems }, userSignIn: { userInfo }, wishlist: { items: wishlistItems } } = useSelector((state) => state);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const isAdmin = userInfo?.isAdmin;
 
@@ -80,6 +80,12 @@ const Header = () => {
                         <ShoppingCartIcon size={32} color='white' />
                     </TouchableOpacity>
                 </View>
+                <View style={styles.wishlistWrapper}>
+                    {wishlistItems.length > 0 && <Text style={styles.wishlistBadge}>{wishlistItems.length}</Text>}
+                    <TouchableOpacity>
+                        <Text style={styles.wishlistIcon}>{'\u2764'}</Text>
+                    </TouchableOpacity>
+                </View>
                 <View>
                     <TouchableOpacity>
                         <SearchIcon size={31} color='white' />
@@ -130,6 +136,23 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#ffffff',
         fontWeight: 'bold',
+    },
+    wishlistWrapper: {
+        paddingTop: 2,
+        marginLeft: 12,
+    },
+    wishlistBadge: {
+        position: 'absolute',
+        zIndex: 10,
+        left: 20,
+        bottom: 24,
+        fontSize: 12,
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
+    wishlistIcon: {
+        fontSize: 28,
+        color: '#ffffff',
     },
 });
 

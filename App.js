@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderHitoryScreen from './screens/OrderHitoryScreen';
+import OrderTrackingScreen from './screens/OrderTrackingScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductScreen from './screens/ProductScreen';
@@ -32,6 +33,7 @@ export default function App() {
             <Stack.Screen name="Payment" component={PaymentScreen} />
             <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
             <Stack.Screen name="OrderHistory" component={OrderHitoryScreen} />
+            <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
           </Stack.Group>
           <Stack.Group
             screenOptions={{

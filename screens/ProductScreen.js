@@ -12,6 +12,7 @@ import CTA from '../components/CTA';
 import moment from 'moment/moment';
 import { addToCart } from '../actions/cartActions';
 import { Rating as StarRate } from 'react-native-ratings';
+import { toggleWishlist } from '../store/wishlistSlice';
 
 export default function ProductScreen() {
     const navigation = useNavigation();
@@ -19,6 +20,7 @@ export default function ProductScreen() {
     const { params: { productId } } = useRoute();
     const { productDetails, cart: { cartItems } } = useSelector((state) => state);
     const { userInfo } = useSelector((state) => state.userSignIn);
+    const { items: wishlistItems } = useSelector((state) => state.wishlist);
     const { loading, error, product } = productDetails;
     const [qty, setQty] = useState(1);
     const [rating, setRating] = useState(5);
@@ -26,6 +28,7 @@ export default function ProductScreen() {
 
     const dateCreated = moment(product?.createdAt).format('YYYY-MM-DD');
     const inCart = cartItems.find((item) => item.product === productId) ? true : false;
+    const inWishlist = wishlistItems.includes(productId);
 
     console.log('inCart', inCart);
 
@@ -48,6 +51,10 @@ export default function ProductScreen() {
         dispatch(addToCart(product._id, qty));
     };
 
+    const handleToggleWishlist = () => {
+        dispatch(toggleWishlist(productId));
+    };
+
     const onFinishRatingPress = (rating) => {
         setRating(rating);
     };
@@ -63,6 +70,9 @@ export default function ProductScreen() {
                             <Image source={{ uri: product?.image }}
                                 style={styles.heroImage}
                                 resizeMode="contain" />
+                            <TouchableOpacity style={styles.heartButton} onPress={handleToggleWishlist}>
+                                <Text style={styles.heartIcon}>{inWishlist ? '\u2764' : '\u2661'}</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.titleBlock}>
                             <Text style={styles.title}>{product?.name}</Text>
@@ -124,6 +134,26 @@ const styles = StyleSheet.create({
     heroImage: {
         height: 384,
         width: '100%',
+    },
+    heartButton: {
+        position: 'absolute',
+        top: 12,
+        right: 12,
+        backgroundColor: '#ffffff',
+        borderRadius: 24,
+        width: 48,
+        height: 48,
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000000',
+        shadowOpacity: 0.2,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    heartIcon: {
+        fontSize: 28,
+        color: '#dc2626',
     },
     titleBlock: {
         paddingLeft: 12,
