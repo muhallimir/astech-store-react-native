@@ -10,8 +10,6 @@ import { createOrder } from '../actions/orderActions';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants';
 import { detailsUser } from '../actions/userActions';
 import Loader from '../components/Loader';
-import { navigateToWebviewScreen } from './WebViewScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PlaceOrderScreen() {
     const dispatch = useDispatch();
@@ -21,7 +19,6 @@ export default function PlaceOrderScreen() {
     const [_id, set_id] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
     const { userSignIn: { userInfo }, userDetails: { user }, cart } = useSelector((state) => state);
-    const token = userInfo.token;
     const { loading, success, error, order } = useSelector((state) => state.orderCreate);
 
 
@@ -54,16 +51,21 @@ export default function PlaceOrderScreen() {
         dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
     };
 
-    const handleWebView = (orderId) => {
-        navigateToWebviewScreen(navigation, { orderId, _id, name, email, isAdmin, token });
-    }
-
     useEffect(() => {
         if (success) {
-            handleWebView(order._id);
+            const placedOrder = order;
+            const placedItems = (placedOrder && placedOrder.orderItems) || cart.cartItems || [];
+            const eta = new Date();
+            eta.setDate(eta.getDate() + 5);
+            navigation.replace('OrderTracking', {
+                orderId: placedOrder?._id,
+                status: placedOrder?.status || 'Pending',
+                estimatedDelivery: placedOrder?.estimatedDelivery || eta.toISOString(),
+                items: placedItems,
+            });
             dispatch({ type: ORDER_CREATE_RESET });
         }
-    }, [dispatch, order, success]);
+    }, [dispatch, order, success, navigation, cart.cartItems]);
 
 
 

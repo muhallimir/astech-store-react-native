@@ -6,6 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { userDetailsReducer, userRegisterReducer, userSignInReducer } from "../reducers/userReducer";
 import { myPurchaseReducer, orderCreateReducer, orderListReducer, orderSummaryReducer } from "../reducers/orderReducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
+import wishlistReducer from "./wishlistSlice";
+import { hydrateWishlist } from "./wishlistSlice";
 
 const initialState = {
   userSignIn: {
@@ -43,6 +45,7 @@ const reducer = combineReducers({
   orderSummary: orderSummaryReducer,
   orderList: orderListReducer,
   myPurchase: myPurchaseReducer,
+  wishlist: wishlistReducer,
 });
 
 const store = createStore(
@@ -52,6 +55,19 @@ const store = createStore(
     applyMiddleware(thunk)
   )
 );
+
+AsyncStorage.getItem("wishlistItems")
+  .then(storedWishlist => {
+    if (storedWishlist) {
+      try {
+        const items = JSON.parse(storedWishlist);
+        store.dispatch(hydrateWishlist(items));
+      } catch (e) {
+        // ignore parse errors
+      }
+    }
+  })
+  .catch(error => console.log(error));
 
 export default store;
 
