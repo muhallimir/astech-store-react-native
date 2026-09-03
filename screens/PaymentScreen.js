@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../components/Header'
@@ -23,17 +23,17 @@ const PaymentScreen = () => {
         <SafeAreaView>
             <Header />
             <OrderStepper step1 step2 step3 />
-            <View className='flex self-center mt-40'>
-                <View className='flex flex-row gap-1 items-center'>
+            <View style={styles.container}>
+                <View style={styles.optionRow}>
                     <RadioButton
                         theme={{ colors: { primary: '#3b82f6' } }}
                         value="Paypal"
                         status={checked === 'Paypal' ? 'checked' : 'unchecked'}
                         onPress={() => setChecked('Paypal')}
                     />
-                    <Text className='text-base font-bold'>Paypal</Text>
+                    <Text style={styles.optionLabel}>Paypal</Text>
                 </View>
-                <View className='flex flex-row gap-1 items-center'>
+                <View style={styles.optionRow}>
                     <RadioButton
                         theme={{ colors: { primary: '#3b82f6' } }}
                         value="Stripe"
@@ -41,17 +41,44 @@ const PaymentScreen = () => {
                         onPress={() => setChecked('Stripe')}
                         disabled
                     />
-                    <Text className='text-base font-bold'>Stripe (Coming soon..)</Text>
+                    <Text style={styles.optionLabel}>Stripe (Coming soon..)</Text>
                 </View>
                 <TouchableOpacity
-                    className='flex flex-row justify-center items-center bg-blue-900 p-3 rounded-md mt-5'
+                    style={styles.cta}
                     onPress={checkoutHandler}
                 >
-                    <Text className='text-white font-bold text-base'>Proceed to Checkout</Text>
+                    <Text style={styles.ctaLabel}>Proceed to Checkout</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignSelf: 'center',
+        marginTop: 160,
+    },
+    optionRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    optionLabel: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    cta: {
+        backgroundColor: '#1e3a8a',
+        padding: 12,
+        borderRadius: 6,
+        marginTop: 20,
+        alignItems: 'center',
+    },
+    ctaLabel: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+});
 
 export default PaymentScreen

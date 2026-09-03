@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 import { useNavigation } from '@react-navigation/native';
@@ -37,38 +37,38 @@ export default function CartScreen() {
         <>
             <SafeAreaView>
                 <Header />
-                <ScrollView className='flex-1 h-full overflow-y-auto w-full'>
-                    <View className='flex flex-row justify-between items-center p-3'>
-                        <Text className='text-black font-bold text-lg'>Shopping Cart</Text>
-                        <Text className='text-black font-bold text-lg'>{cartItems?.length} item(s)</Text>
+                <ScrollView style={styles.scroll}>
+                    <View style={styles.headerRow}>
+                        <Text style={styles.heading}>Shopping Cart</Text>
+                        <Text style={styles.heading}>{cartItems?.length} item(s)</Text>
                     </View>
-                    <View className='flex flex-col w-full'>
+                    <View style={styles.body}>
                         {cartItems?.length === 0 ? (
-                            <View className='flex flex-col items-center justify-center w-full mt-3'>
-                                <Text className='text-black font-bold text-xl mb-2'>Your cart is empty</Text>
+                            <View style={styles.empty}>
+                                <Text style={styles.emptyTitle}>Your cart is empty</Text>
                                 <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                                    <Text className='text-blue-900 font-bold text-2xl'>Click here to start shopping</Text>
+                                    <Text style={styles.emptyCta}>Click here to start shopping</Text>
                                 </TouchableOpacity>
                             </View>
                         ) : (
-                            <View className='flex flex-col w-full mb-28'>
+                            <View style={styles.list}>
                                 {cartItems?.map((item) => (
-                                    <View className='flex-row justify-between items-center p-3' key={item?.product}>
-                                        <View className='flex flex-row items-center'>
+                                    <View style={styles.itemRow} key={item?.product}>
+                                        <View style={styles.item}>
                                             <Image source={{ uri: item?.image }}
                                                 style={{ width: 100, height: 100, resizeMode: 'contain' }} />
-                                            <View className='flex flex-col items-start justify-center ml-3'>
-                                                <Text className='text-black font-bold text-lg'>{item?.name}</Text>
-                                                <Text className='text-black font-bold text-base'>${item?.price}</Text>
-                                                <View className='flex flex-row items-center justify-center'>
-                                                    <Text className='text-gray-900 font-bold text-sm'>Quantity:</Text>
-                                                    <View className='flex flex-row items-center justify-center ml-3'>
+                                            <View style={styles.itemDetail}>
+                                                <Text style={styles.itemName}>{item?.name}</Text>
+                                                <Text style={styles.itemPrice}>${item?.price}</Text>
+                                                <View style={styles.qtyRow}>
+                                                    <Text style={styles.qtyLabel}>Quantity:</Text>
+                                                    <View style={styles.qtyControls}>
                                                         <TouchableOpacity onPress={() => qtyUpdateHandler(item?.product, item?.qty - 1)}>
-                                                            <Text className='text-blue-900 font-bold text-xl'>-</Text>
+                                                            <Text style={styles.qtyBtn}>-</Text>
                                                         </TouchableOpacity>
-                                                        <Text className='text-blue-900 font-bold text-base ml-3 mr-3'>{item?.qty}</Text>
+                                                        <Text style={styles.qtyValue}>{item?.qty}</Text>
                                                         <TouchableOpacity onPress={() => qtyUpdateHandler(item?.product, item?.qty + 1)}>
-                                                            <Text className='text-blue-900 font-bold text-xl'>+</Text>
+                                                            <Text style={styles.qtyBtn}>+</Text>
                                                         </TouchableOpacity>
                                                     </View>
                                                 </View>
@@ -76,9 +76,9 @@ export default function CartScreen() {
                                         </View>
                                     </View>
                                 ))}
-                                <View className='flex flex-row justify-between items-center p-3'>
-                                    <Text className='text-black font-bold text-2xl'>Total</Text>
-                                    <Text className='text-black font-bold text-2xl'>
+                                <View style={styles.totalRow}>
+                                    <Text style={styles.totalLabel}>Total</Text>
+                                    <Text style={styles.totalLabel}>
                                         ${cartItems?.reduce((acc, item) => acc + item?.price * item?.qty, 0).toFixed(2)}
                                     </Text>
                                 </View>
@@ -87,12 +87,12 @@ export default function CartScreen() {
                     </View>
 
                 </ScrollView>
-                <View className='absolute w-full bottom-12'>
+                <View style={styles.checkoutBar}>
                     <TouchableOpacity
-                        className='bg-blue-900 p-3 items-center justify-center'
+                        style={styles.checkoutBtn}
                         onPress={checkoutHandler}
                     >
-                        <Text className='text-white font-bold text-2xl'>Proceed to Checkout</Text>
+                        <Text style={styles.checkoutLabel}>Proceed to Checkout</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>
@@ -101,3 +101,118 @@ export default function CartScreen() {
     )
 }
 
+const styles = StyleSheet.create({
+    scroll: {
+        flex: 1,
+        height: '100%',
+        width: '100%',
+    },
+    headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 12,
+    },
+    heading: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
+    body: {
+        width: '100%',
+    },
+    empty: {
+        alignItems: 'center',
+        marginTop: 12,
+    },
+    emptyTitle: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginBottom: 8,
+    },
+    emptyCta: {
+        color: '#1e3a8a',
+        fontWeight: 'bold',
+        fontSize: 24,
+    },
+    list: {
+        marginBottom: 112,
+    },
+    itemRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 12,
+    },
+    item: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    itemDetail: {
+        marginLeft: 12,
+    },
+    itemName: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
+    itemPrice: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    qtyRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    qtyLabel: {
+        color: '#111827',
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    qtyControls: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 12,
+    },
+    qtyBtn: {
+        color: '#1e3a8a',
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+    qtyValue: {
+        color: '#1e3a8a',
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginLeft: 12,
+        marginRight: 12,
+    },
+    totalRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 12,
+    },
+    totalLabel: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 24,
+    },
+    checkoutBar: {
+        position: 'absolute',
+        width: '100%',
+        bottom: 48,
+    },
+    checkoutBtn: {
+        backgroundColor: '#1e3a8a',
+        padding: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    checkoutLabel: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 24,
+    },
+});

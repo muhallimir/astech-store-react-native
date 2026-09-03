@@ -1,6 +1,5 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
@@ -14,37 +13,37 @@ export default function Rating({ rating, numReviews }) {
         }
     }, [numReviews])
 
+    const starStyle = { color: '#f8e825' };
+
     return (
-        <View className='flex flex-row items-center'>
-            <View className='flex flex-row items-center'>
-                <FontAwesomeIcon icon={rating >= 1 ? faStar : rating >= 0.5 ? faStarHalfAlt : farStar} style={
-                    rating >= 1 ? { color: '#f8e825' } : rating >= 0.5 ? { color: '#f8e825' } : { color: '#f8e825' }
-                } />
-                <FontAwesomeIcon icon={rating >= 2 ? faStar : rating >= 1.5 ? faStarHalfAlt : farStar} style={
-                    rating >= 2 ? { color: '#f8e825' } : rating >= 1.5 ? { color: '#f8e825' } : { color: '#f8e825' }
-                } />
-                <FontAwesomeIcon icon={rating >= 3 ? faStar : rating >= 2.5 ? faStarHalfAlt : farStar} style={
-                    rating >= 3 ? { color: '#f8e825' } : rating >= 2.5 ? { color: '#f8e825' } : { color: '#f8e825' }
-                } />
-                <FontAwesomeIcon icon={rating >= 4 ? faStar : rating >= 3.5 ? faStarHalfAlt : farStar} style={
-                    rating >= 4 ? { color: '#f8e825' } : rating >= 3.5 ? { color: '#f8e825' } : { color: '#f8e825' }
-                } />
-                <FontAwesomeIcon icon={rating >= 5 ? faStar : rating >= 4.5 ? faStarHalfAlt : farStar} style={
-                    rating >= 5 ? { color: '#f8e825' } : rating >= 4.5 ? { color: '#f8e825' } : { color: '#f8e825' }
-                } />
+        <View style={styles.container}>
+            <View style={styles.starRow}>
+                <FontAwesomeIcon icon={rating >= 1 ? faStar : rating >= 0.5 ? faStarHalfAlt : farStar} style={starStyle} />
+                <FontAwesomeIcon icon={rating >= 2 ? faStar : rating >= 1.5 ? faStarHalfAlt : farStar} style={starStyle} />
+                <FontAwesomeIcon icon={rating >= 3 ? faStar : rating >= 2.5 ? faStarHalfAlt : farStar} style={starStyle} />
+                <FontAwesomeIcon icon={rating >= 4 ? faStar : rating >= 3.5 ? faStarHalfAlt : farStar} style={starStyle} />
+                <FontAwesomeIcon icon={rating >= 5 ? faStar : rating >= 4.5 ? faStarHalfAlt : farStar} style={starStyle} />
             </View>
-            {!isReviewer && <Text className='text-sm text-gray-500 ml-2'>{numReviews} reviews </Text>}
+            {!isReviewer && <Text style={styles.reviewCount}>{numReviews} reviews </Text>}
         </View>
     )
 }
 
-Rating.propTypes = {
-    rating: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string
-    ]),
-    numReviews: PropTypes.number,
-}
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    starRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    reviewCount: {
+        fontSize: 14,
+        color: '#6b7280',
+        marginLeft: 8,
+    },
+});
 
 Rating.defaultProps = {
     rating: 0,

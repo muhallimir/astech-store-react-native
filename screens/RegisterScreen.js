@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
@@ -49,10 +49,10 @@ export default function RegisterScreen() {
         <SafeAreaView>
             <Header />
             {loading && <Loader loading={loading} />}
-            <View className='flex flex-col items-center justify-center w-full mt-3'>
-                <Text className='text-black font-bold text-2xl mb-5'>Create an account</Text>
+            <View style={styles.titleBlock}>
+                <Text style={styles.title}>Create an account</Text>
             </View>
-            <View className='mx-2'>
+            <View style={styles.formWrap}>
                 <Form buttonStyle={{
                     backgroundColor: '#3b82f6',
                     borderRadius: 5,
@@ -105,15 +105,39 @@ export default function RegisterScreen() {
                     />
                 </Form>
             </View>
-            <View className='flex flex-col items-center justify-center w-full mt-3'>
-                <View className='flex-row text-left'>
+            <View style={styles.footerBlock}>
+                <View>
                     <Text>Already have an account?</Text>
                 </View>
                 <TouchableOpacity onPress={navigateToLogin}>
-                    <Text className='text-blue-900 text-base'>Sign in here</Text>
+                    <Text style={styles.signinLink}>Sign in here</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
 
     )
 }
+
+const styles = StyleSheet.create({
+    titleBlock: {
+        marginTop: 12,
+        alignItems: 'center',
+    },
+    title: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 24,
+        marginBottom: 20,
+    },
+    formWrap: {
+        marginHorizontal: 8,
+    },
+    footerBlock: {
+        marginTop: 12,
+        alignItems: 'center',
+    },
+    signinLink: {
+        color: '#1e3a8a',
+        fontSize: 16,
+    },
+});

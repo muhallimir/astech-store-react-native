@@ -1,4 +1,4 @@
-import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createReview, detailsProduct } from '../actions/productActions';
@@ -29,28 +29,9 @@ export default function ProductScreen() {
 
     console.log('inCart', inCart);
 
-    // const [qty, setQty] = useState(1);
-    //   const userSignin = useSelector((state) => state.userSignin);
-    //   const { userInfo } = userSignin;
-    //   const productReviewCreate = useSelector((state) => state.productReviewCreate);
-    //   const {
-    //     loading: loadingReviewCreate,
-    //     error: errorReviewCreate,
-    //     success: successReviewCreate,
-    //   } = productReviewCreate;
-
-
-
     useEffect(() => {
-        // if (successReviewCreate) {
-        //   window.alert("Review Submitted Successfully");
-        //   setRating("");
-        //   setComment("");
-        //   dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
-        // }
         dispatch(detailsProduct(productId));
         console.log(rating);
-        //   }, [dispatch, productId, successReviewCreate]);
     }, [dispatch, productId]);
 
     const handleSubmit = (e) => {
@@ -74,51 +55,51 @@ export default function ProductScreen() {
 
     return (
         <>
-            <SafeAreaView className="bg-white">
+            <SafeAreaView style={styles.safe}>
                 <Header />
-                {loading ? <Loader loading={loading} /> : error ? <Text className='text-black font-bold'>{error}</Text> :
+                {loading ? <Loader loading={loading} /> : error ? <Text style={styles.errorBold}>{error}</Text> :
                     <ScrollView>
-                        <View className="relative">
+                        <View style={styles.imageWrap}>
                             <Image source={{ uri: product?.image }}
-                                className='h-96 w-full'
+                                style={styles.heroImage}
                                 resizeMode="contain" />
                         </View>
-                        <View className='flex gap-2 pl-3'>
-                            <Text className="text-2xl font-bold">{product?.name}</Text>
-                            <Text className="text-l font-bold">Price: $ {product?.price}</Text>
-                            <Text className="text-l font-semibold">Description: {product?.description}</Text>
+                        <View style={styles.titleBlock}>
+                            <Text style={styles.title}>{product?.name}</Text>
+                            <Text style={styles.subtitle}>Price: $ {product?.price}</Text>
+                            <Text style={styles.subtitle}>Description: {product?.description}</Text>
                         </View>
-                        <View className='flex gap-2 pl-4 py-3'>
+                        <View style={styles.ratingBlock}>
                             <Rating rating={product?.rating} numReviews={product?.numReviews} />
                         </View>
-                        <View className='pt-2'>
-                            <Text className="text-xl font-bold pl-3">Reviews</Text>
+                        <View style={styles.reviewsSection}>
+                            <Text style={styles.sectionTitle}>Reviews</Text>
                             {product?.reviews?.length === 0 && <Text>No Reviews</Text>}
-                            <View className=''>
+                            <View>
                                 {product?.reviews?.map((review) => (
-                                    <View className='flex gap-2 pl-3 py-3' key={review?._id}>
-                                        <Text className="text-l font-semibold">{review?.name}</Text>
+                                    <View style={styles.reviewRow} key={review?._id}>
+                                        <Text style={styles.reviewName}>{review?.name}</Text>
                                         <Rating rating={review?.rating} />
-                                        <Text className="text-l font-semibold">{review?.comment}</Text>
-                                        <Text className="text-l font-semibold">{dateCreated}</Text>
+                                        <Text style={styles.reviewText}>{review?.comment}</Text>
+                                        <Text style={styles.reviewText}>{dateCreated}</Text>
                                     </View>
                                 ))}
                             </View>
                         </View>
-                        <Text className="text-2xl font-bold pl-2 pt-1">Leave a review</Text>
-                        <View className='flex gap-1 pb-36'>
+                        <Text style={styles.leaveTitle}>Leave a review</Text>
+                        <View style={styles.leaveForm}>
                             {userInfo ? (
-                                <View className='flex gap-2 pl-1 py-3'>
-                                    <View className='flex-row left-0'>
+                                <View style={styles.leaveInner}>
+                                    <View style={styles.starRow}>
                                         <StarRate startingValue={5} defaultRating={5} imageSize={30} onFinishRating={onFinishRatingPress} />
                                     </View>
-                                    <TextInput placeholder="Enter comment" className="border border-gray-300 rounded-md p-2" value={comment} onChangeText={(e) => setComment(e)} />
+                                    <TextInput placeholder="Enter comment" style={styles.commentInput} value={comment} onChangeText={(e) => setComment(e)} />
                                     <TouchableOpacity onPress={handleSubmit} >
-                                        <Text className="text-blue-500 text-lg font-bold pl-2">Submit</Text>
+                                        <Text style={styles.submit}>Submit</Text>
                                     </TouchableOpacity>
                                 </View>
                             ) : (
-                                <Text>Please <Text className="text-blue-500 font-bold" onPress={() => navigation.navigate('SignIn')}>Sign In</Text> to write a review</Text>
+                                <Text>Please <Text style={styles.signInLink} onPress={() => navigation.navigate('SignIn')}>Sign In</Text> to write a review</Text>
                             )}
                         </View>
                     </ScrollView>
@@ -128,3 +109,94 @@ export default function ProductScreen() {
         </>
     )
 }
+
+const styles = StyleSheet.create({
+    safe: {
+        backgroundColor: '#ffffff',
+    },
+    errorBold: {
+        color: '#000000',
+        fontWeight: 'bold',
+    },
+    imageWrap: {
+        position: 'relative',
+    },
+    heroImage: {
+        height: 384,
+        width: '100%',
+    },
+    titleBlock: {
+        paddingLeft: 12,
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    subtitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    description: {
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    ratingBlock: {
+        paddingLeft: 16,
+        paddingVertical: 12,
+    },
+    reviewsSection: {
+        paddingTop: 8,
+    },
+    sectionTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingLeft: 12,
+    },
+    reviewRow: {
+        paddingLeft: 12,
+        paddingVertical: 12,
+    },
+    reviewName: {
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    reviewText: {
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    leaveTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        paddingLeft: 8,
+        paddingTop: 4,
+    },
+    leaveForm: {
+        paddingBottom: 144,
+    },
+    leaveInner: {
+        paddingLeft: 4,
+        paddingVertical: 12,
+    },
+    starRow: {
+        flexDirection: 'row',
+        left: 0,
+    },
+    commentInput: {
+        borderWidth: 1,
+        borderColor: '#d1d5db',
+        borderRadius: 6,
+        padding: 8,
+    },
+    submit: {
+        color: '#3b82f6',
+        fontSize: 18,
+        fontWeight: 'bold',
+        paddingLeft: 8,
+    },
+    signInLink: {
+        color: '#3b82f6',
+        fontWeight: 'bold',
+    },
+});

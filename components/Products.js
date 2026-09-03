@@ -1,4 +1,4 @@
-import { SafeAreaView, Text } from 'react-native'
+import { SafeAreaView, Text, StyleSheet } from 'react-native'
 import ProductCard from './ProductCard'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -19,8 +19,18 @@ export default function Products() {
     }, [dispatch]);
 
     return (
-        <SafeAreaView className="flex-1">
-            {loading ? <Loader loading={loading} /> : error ? <Text className='text-red font-bold'>{error}</Text> : <ProductCard products={products} />}
+        <SafeAreaView style={styles.container}>
+            {loading ? <Loader loading={loading} /> : error ? <Text style={styles.error}>{error}</Text> : <ProductCard products={products} />}
         </SafeAreaView >
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    error: {
+        color: '#dc2626',
+        fontWeight: 'bold',
+    },
+});

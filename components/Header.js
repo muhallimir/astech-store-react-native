@@ -1,4 +1,4 @@
-import { Image, Text, View, Modal } from 'react-native'
+import { Image, Text, View, Modal, StyleSheet } from 'react-native'
 import Logo from "../assets/images/Logo.png";
 import { SearchIcon } from "react-native-heroicons/outline";
 import { ShoppingCartIcon } from "react-native-heroicons/solid";
@@ -43,39 +43,39 @@ const Header = () => {
     return (
         <>
             <WarningModal message={'This will sign you out. Would you like to continue?'} handleSignOut={handleSignOut} setIsOpenModal={setIsOpenModal} isOpenModal={isOpenModal} />
-            <View className='flex-row bg-blue-900 py-2 h-12 justify-center items-center space-x-2'>
+            <View style={styles.container}>
                 <TouchableOpacity onPress={() => navigateToHome()}>
-                    <Image source={Logo} className="h-7 w-32 object-contain ml-1 mt-1 mr-2" />
+                    <Image source={Logo} style={styles.logo} />
                 </TouchableOpacity>
-                <View className='items-center'>
-                    <Text className='text-white text-xs'>Hello</Text>
+                <View style={styles.column}>
+                    <Text style={styles.smallLabel}>Hello</Text>
                     {userInfo?.name ? (<TouchableOpacity onPress={() => setIsOpenModal(true)}>
-                        <Text className='text-white font-bold'>{userInfo?.name}</Text>
+                        <Text style={styles.boldLabel}>{userInfo?.name}</Text>
                     </TouchableOpacity>) : (<TouchableOpacity onPress={navigateToSignIn}>
-                        <Text className='text-white font-bold'>Sign in</Text>
+                        <Text style={styles.boldLabel}>Sign in</Text>
                     </TouchableOpacity>)}
                 </View>
-                <View className='items-center'>
-                    <Text className='text-white text-xs'>Manage</Text>
+                <View style={styles.column}>
+                    <Text style={styles.smallLabel}>Manage</Text>
                     <TouchableOpacity>
-                        <Text className='text-white font-bold'>Profile</Text>
+                        <Text style={styles.boldLabel}>Profile</Text>
                     </TouchableOpacity>
                 </View>
-                {isAdmin ? <View className='items-center'>
-                    <Text className='text-white text-xs'>Admin</Text>
+                {isAdmin ? <View style={styles.column}>
+                    <Text style={styles.smallLabel}>Admin</Text>
                     <TouchableOpacity>
-                        <Text className='text-white font-bold'>Access</Text>
+                        <Text style={styles.boldLabel}>Access</Text>
                     </TouchableOpacity>
                 </View> :
-                    <View className='items-center'>
-                        <Text className='text-white text-xs'>Order</Text>
+                    <View style={styles.column}>
+                        <Text style={styles.smallLabel}>Order</Text>
                         <TouchableOpacity onPress={() => navigateToOrderHistory()}>
-                            <Text className='text-white font-bold'>History</Text>
+                            <Text style={styles.boldLabel}>History</Text>
                         </TouchableOpacity>
                     </View>
                 }
-                <View className='pt-0.5'>
-                    {cartItems.length > 0 && <Text className='absolute z-10 left-8 bottom-6 text-xs text-white font-bold'>{cartItems.length}</Text>}
+                <View style={styles.cartWrapper}>
+                    {cartItems.length > 0 && <Text style={styles.cartBadge}>{cartItems.length}</Text>}
                     <TouchableOpacity onPress={() => navigateToCart()}>
                         <ShoppingCartIcon size={32} color='white' />
                     </TouchableOpacity>
@@ -89,5 +89,48 @@ const Header = () => {
         </>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        backgroundColor: '#1e3a8a',
+        paddingVertical: 8,
+        height: 48,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 8,
+    },
+    logo: {
+        height: 28,
+        width: 128,
+        resizeMode: 'contain',
+        marginLeft: 4,
+        marginTop: 4,
+        marginRight: 8,
+    },
+    column: {
+        alignItems: 'center',
+    },
+    smallLabel: {
+        color: '#ffffff',
+        fontSize: 12,
+    },
+    boldLabel: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
+    cartWrapper: {
+        paddingTop: 2,
+    },
+    cartBadge: {
+        position: 'absolute',
+        zIndex: 10,
+        left: 32,
+        bottom: 24,
+        fontSize: 12,
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
+});
 
 export default Header

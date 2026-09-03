@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -56,7 +56,7 @@ export default function ShippingScreen() {
                 contentContainerStyle={{ paddingBottom: 90 }}
 
             >
-                <View className='mx-2'>
+                <View style={styles.formWrap}>
                     <Form buttonStyle={{
                         backgroundColor: '#3b82f6',
                         borderRadius: 5,
@@ -130,3 +130,9 @@ export default function ShippingScreen() {
     )
 
 }
+
+const styles = StyleSheet.create({
+    formWrap: {
+        marginHorizontal: 8,
+    },
+});

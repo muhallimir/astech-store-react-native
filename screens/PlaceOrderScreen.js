@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../components/Header'
@@ -39,10 +39,8 @@ export default function PlaceOrderScreen() {
         }
     }, [dispatch, userInfo._id, user]);
 
-    // total price conversion to currency format e.g: 2.123 => "2.12" => 2.12
     const curPrice = (num) => Number(num.toFixed(2));
 
-    //   a = accumulator c = current price
     cart.itemsPrice = curPrice(
         cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
     );
@@ -73,45 +71,79 @@ export default function PlaceOrderScreen() {
         <SafeAreaView>
             <Header />
             <OrderStepper step1 step2 step3 step4 />
-            <View className='mx-4 bg-gray-200 p-5 rounded-lg'>
-                <View className='flex-row justify-between' >
-                    <Text className='font-bold text-lg'>Shipping:</Text>
-                    <Text className='text-lg'>{cart.shippingAddress.address}, {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}, {cart.shippingAddress.country}</Text>
+            <View style={styles.summary}>
+                <View style={styles.row} >
+                    <Text style={styles.rowLabel}>Shipping:</Text>
+                    <Text style={styles.rowValue}>{cart.shippingAddress.address}, {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}, {cart.shippingAddress.country}</Text>
                 </View>
-                <View className='flex-row justify-between' >
-                    <Text className='font-bold text-lg'>Payment method:</Text>
-                    <Text className='text-lg'>{cart.paymentMethod}</Text>
+                <View style={styles.row} >
+                    <Text style={styles.rowLabel}>Payment method:</Text>
+                    <Text style={styles.rowValue}>{cart.paymentMethod}</Text>
                 </View>
-                <View className='flex-row justify-between' >
-                    <Text className='font-bold text-lg'>Ordered items:</Text>
-                    <Text className='text-lg'>{cart.cartItems.length}</Text>
+                <View style={styles.row} >
+                    <Text style={styles.rowLabel}>Ordered items:</Text>
+                    <Text style={styles.rowValue}>{cart.cartItems.length}</Text>
                 </View>
-                <View className='flex-row justify-between' >
-                    <Text className='font-bold text-lg'>Items price:</Text>
-                    <Text className='text-lg'>${cart.itemsPrice}</Text>
+                <View style={styles.row} >
+                    <Text style={styles.rowLabel}>Items price:</Text>
+                    <Text style={styles.rowValue}>${cart.itemsPrice}</Text>
                 </View>
-                <View className='flex-row justify-between' >
-                    <Text className='font-bold text-lg'>Shipping fee:</Text>
-                    <Text className='text-lg'>${cart.shippingPrice}</Text>
+                <View style={styles.row} >
+                    <Text style={styles.rowLabel}>Shipping fee:</Text>
+                    <Text style={styles.rowValue}>${cart.shippingPrice}</Text>
                 </View>
-                <View className='flex-row justify-between' >
-                    <Text className='font-bold text-lg'>VAT:</Text>
-                    <Text className='text-lg'>${cart.taxPrice}</Text>
+                <View style={styles.row} >
+                    <Text style={styles.rowLabel}>VAT:</Text>
+                    <Text style={styles.rowValue}>${cart.taxPrice}</Text>
                 </View>
-                <View className='flex-row justify-between' >
+                <View style={styles.row} >
 
-                    <Text className='font-bold text-lg'>Total amount:</Text>
-                    <Text className='text-lg'>${cart.totalPrice}</Text>
+                    <Text style={styles.rowLabel}>Total amount:</Text>
+                    <Text style={styles.rowValue}>${cart.totalPrice}</Text>
                 </View>
 
-                <TouchableOpacity className='bg-blue-900 p-5 mt-20 rounded-lg items-center' onPress={handlePlaceOrder}>
-                    <Text className='text-white text-xl'>Place Order</Text>
+                <TouchableOpacity style={styles.cta} onPress={handlePlaceOrder}>
+                    <Text style={styles.ctaLabel}>Place Order</Text>
                 </TouchableOpacity>
             </View>
             <View>
                 {loading && <Loader loading={loading} payment />}
-                {error && <Text className='text-red-700'>error: {error}</Text>}
+                {error && <Text style={styles.error}>error: {error}</Text>}
             </View>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    summary: {
+        marginHorizontal: 16,
+        backgroundColor: '#e5e7eb',
+        padding: 20,
+        borderRadius: 8,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    rowLabel: {
+        fontWeight: 'bold',
+        fontSize: 18,
+    },
+    rowValue: {
+        fontSize: 18,
+    },
+    cta: {
+        backgroundColor: '#1e3a8a',
+        padding: 20,
+        marginTop: 80,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    ctaLabel: {
+        color: '#ffffff',
+        fontSize: 20,
+    },
+    error: {
+        color: '#b91c1c',
+    },
+});

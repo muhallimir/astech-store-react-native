@@ -1,28 +1,79 @@
 import React from 'react'
-import { View, Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from './Header';
+import { View, Text, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types';
 
 
 export default function OrderStepper({ step1, step2, step3, step4 }) {
     return (
-        <View className='flex flex-row self-center space-evenly mt-2 mx-1'>
-            <View className={step1 ? 'flex-1 p-2 border-t-4 border-blue-900 pl-5' : 'flex-1 p-2 border-t-4 border-gray-400'}>
-                <Text className={step1 ? 'text-blue-900 font-bold' : 'font-bold'}>Order</Text>
+        <View style={styles.container}>
+            <View style={styles.stepOuter}>
+                <View style={step1 ? styles.stepActive : styles.stepInactive}>
+                    <Text style={step1 ? styles.textActive : styles.textBold}>Order</Text>
+                </View>
             </View>
-            <View className={step2 ? 'flex-1 p-2 border-t-4 border-blue-900 pl-8' : 'flex-1 p-2 border-t-4 border-gray-400'}>
-                <Text className={step2 ? 'text-blue-900 font-bold' : 'font-bold'}>Shipping</Text>
+            <View style={styles.stepOuter}>
+                <View style={step2 ? styles.stepActive2 : styles.stepInactive}>
+                    <Text style={step2 ? styles.textActive : styles.textBold}>Shipping</Text>
+                </View>
             </View>
-            <View className={step3 ? 'flex-1 p-2 border-t-4 border-blue-900' : 'flex-1 p-2 border-t-4 border-gray-400'}>
-                <Text className={step3 ? 'text-blue-900 font-bold' : 'font-normal'}>Payment</Text>
+            <View style={styles.stepOuter}>
+                <View style={step3 ? styles.stepActiveNoPad : styles.stepInactive}>
+                    <Text style={step3 ? styles.textActive : styles.textNormal}>Payment</Text>
+                </View>
             </View>
-            <View className={step4 ? 'flex-1 p-2 border-t-4 border-blue-900' : 'flex-1 p-2 border-t-4 border-gray-400'}>
-                <Text className={step4 ? 'text-blue-900 font-bold' : 'font-normal'}>Checkout</Text>
+            <View style={styles.stepOuter}>
+                <View style={step4 ? styles.stepActiveNoPad : styles.stepInactive}>
+                    <Text style={step4 ? styles.textActive : styles.textNormal}>Checkout</Text>
+                </View>
             </View>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignSelf: 'center',
+        justifyContent: 'space-evenly',
+        marginTop: 8,
+        marginHorizontal: 4,
+    },
+    stepOuter: {
+        flex: 1,
+    },
+    stepActive: {
+        padding: 8,
+        borderTopWidth: 4,
+        borderColor: '#1e3a8a',
+        paddingLeft: 20,
+    },
+    stepActive2: {
+        padding: 8,
+        borderTopWidth: 4,
+        borderColor: '#1e3a8a',
+        paddingLeft: 32,
+    },
+    stepActiveNoPad: {
+        padding: 8,
+        borderTopWidth: 4,
+        borderColor: '#1e3a8a',
+    },
+    stepInactive: {
+        padding: 8,
+        borderTopWidth: 4,
+        borderColor: '#9ca3af',
+    },
+    textActive: {
+        color: '#1e3a8a',
+        fontWeight: 'bold',
+    },
+    textBold: {
+        fontWeight: 'bold',
+    },
+    textNormal: {
+        fontWeight: 'normal',
+    },
+});
 
 OrderStepper.propTypes = {
     step1: PropTypes.bool,
@@ -37,4 +88,3 @@ OrderStepper.defaultProps = {
     step3: false,
     step4: false
 }
-
