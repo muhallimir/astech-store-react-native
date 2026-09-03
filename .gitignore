@@ -79,3 +79,9 @@ dist/
 # Expo SDK 54
 /android/
 /ios/
+
+# Logs
+*.log
+
+# Environment files
+.env*
