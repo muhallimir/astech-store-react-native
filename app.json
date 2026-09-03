@@ -2,10 +2,11 @@
   "expo": {
     "name": "AStech Store",
     "slug": "astech-react-native",
+    "scheme": "astech",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
@@ -20,17 +21,23 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.amirsali.astechreactnative"
+      "bundleIdentifier": "com.amirsali.astechstore"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.amirsali.astechreactnative"
+      "package": "com.amirsali.astechstore"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "author": {
+        "name": "Amirsali",
+        "github": "https://github.com/muhallimir"
+      }
     }
   }
 }
