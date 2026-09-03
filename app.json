@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "astech-react-native",
+    "name": "AStech Store",
     "slug": "astech-react-native",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -18,7 +19,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.amirsali.astechreactnative"
     },
     "android": {
       "adaptiveIcon": {

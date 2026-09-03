@@ -10,7 +10,7 @@ import { ScrollView } from "react-native-gesture-handler";
 const HomeScreen = () => {
 
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView style={styles.safe}>
       <Header />
       <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         <Carousel />
@@ -19,6 +19,10 @@ const HomeScreen = () => {
       </ScrollView>
     </SafeAreaView>
   );
+};
+
+const styles = {
+  safe: { backgroundColor: '#ffffff' },
 };
 
 export default HomeScreen;

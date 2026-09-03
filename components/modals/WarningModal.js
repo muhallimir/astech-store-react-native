@@ -1,20 +1,20 @@
 import React from 'react';
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
 const WarningModal = ({ message, handleSignOut, setIsOpenModal, isOpenModal }) => {
 
     return (
         <Modal visible={isOpenModal} animationType="fade" transparent={true}>
-            <View className="flex h-screen items-center justify-center bg-black bg-opacity-75 mt-2">
-                <View className="bg-white p-6 rounded-lg shadow-xl">
-                    <Text className="text-xl text-center font-medium mb-6">{message}</Text>
-                    <View className="flex justify-between gap-2">
-                        <TouchableOpacity className="px-4 py-2 bg-gray-300 rounded-lg" onPress={handleSignOut}>
+            <View style={styles.backdrop}>
+                <View style={styles.card}>
+                    <Text style={styles.message}>{message}</Text>
+                    <View style={styles.actions}>
+                        <TouchableOpacity style={styles.confirmBtn} onPress={handleSignOut}>
                             <Text>Confirm</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className="px-4 py-2 bg-blue-700 rounded-lg " onPress={() => setIsOpenModal(false)}>
-                            <Text className='text-white'>Cancel</Text>
+                        <TouchableOpacity style={styles.cancelBtn} onPress={() => setIsOpenModal(false)}>
+                            <Text style={styles.cancelLabel}>Cancel</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -23,6 +23,45 @@ const WarningModal = ({ message, handleSignOut, setIsOpenModal, isOpenModal }) =
     );
 };
 
+const styles = StyleSheet.create({
+    backdrop: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.75)',
+        marginTop: 8,
+    },
+    card: {
+        backgroundColor: '#ffffff',
+        padding: 24,
+        borderRadius: 8,
+    },
+    message: {
+        fontSize: 20,
+        textAlign: 'center',
+        fontWeight: '500',
+        marginBottom: 24,
+    },
+    actions: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    confirmBtn: {
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        backgroundColor: '#d1d5db',
+        borderRadius: 8,
+    },
+    cancelBtn: {
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        backgroundColor: '#1d4ed8',
+        borderRadius: 8,
+    },
+    cancelLabel: {
+        color: '#ffffff',
+    },
+});
 
 export default WarningModal;
 
@@ -32,4 +71,3 @@ WarningModal.propTypes = {
     setIsOpenModal: PropTypes.func.isRequired,
     isOpenModal: PropTypes.bool.isRequired,
 };
-

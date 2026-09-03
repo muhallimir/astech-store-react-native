@@ -1,12 +1,26 @@
-import { View, Image } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import Carousel2 from "../assets/images/carousel2.jpg";
 
 
 export default function () {
     return (
-        <View className='h-48 w-full ml-auto mr-auto self-center'>
-            <Image source={Carousel2} className='w-full h-full' />
+        <View style={styles.container}>
+            <Image source={Carousel2} style={styles.image} resizeMode="cover" />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        height: 192,
+        width: '100%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        alignSelf: 'center',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
+});

@@ -73,3 +73,9 @@ web-build/
 dist/
 
 # @end expo-cli
+# Yarn
+/yarn.lock
+
+# Expo SDK 54
+/android/
+/ios/

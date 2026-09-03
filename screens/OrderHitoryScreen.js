@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../components/Header'
@@ -31,7 +31,7 @@ export default function OrderHitoryScreen() {
         order.isPaid ? order.paidAt : 'No',
         order.isDelivered ? order.deliveredAt : 'No',
         <TouchableOpacity onPress={() => handleWebView(order._id)} >
-            <Text className='text-blue-500 font-bold'>Details</Text>
+            <Text style={styles.detailsLink}>Details</Text>
         </TouchableOpacity>
     ]);
 
@@ -42,16 +42,16 @@ export default function OrderHitoryScreen() {
     return (
         <SafeAreaView>
             <Header />
-            <View className='flex flex-column justify-between w-full'>
-                {loading ? <Loader loading={loading} /> : error ? <Text className='text-red font-bold'>{error}</Text> :
+            <View style={styles.container}>
+                {loading ? <Loader loading={loading} /> : error ? <Text style={styles.error}>{error}</Text> :
                     <Table>
-                        <Row data={['Date', 'Total', 'Paid', 'Delivered', 'Action']} className='flex-row justify-between items-center text-center bg-gray-200 p-2' textStyle='font-bold' />
+                        <Row data={['Date', 'Total', 'Paid', 'Delivered', 'Action']} style={styles.headerRow} textStyle={styles.headerText} />
                         {tableData.map((rowData, index) => (
                             <Row
                                 key={index}
                                 data={rowData}
-                                className='flex-row justify-between items-center bg-gray-200 p-2 rounded-md my-2'
-                                textStyle='mr-2 flex-1 flex-wrap font-normal'
+                                style={styles.bodyRow}
+                                textStyle={styles.bodyText}
                             />
                         ))}
                     </Table>}
@@ -59,3 +59,36 @@ export default function OrderHitoryScreen() {
         </SafeAreaView >
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    error: {
+        color: '#dc2626',
+        fontWeight: 'bold',
+    },
+    detailsLink: {
+        color: '#3b82f6',
+        fontWeight: 'bold',
+    },
+    headerRow: {
+        backgroundColor: '#e5e7eb',
+        padding: 8,
+    },
+    headerText: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    bodyRow: {
+        backgroundColor: '#e5e7eb',
+        padding: 8,
+        borderRadius: 6,
+        marginVertical: 8,
+    },
+    bodyText: {
+        fontWeight: 'normal',
+        flexWrap: 'wrap',
+    },
+});
