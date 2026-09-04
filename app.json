@@ -37,7 +37,11 @@
       "author": {
         "name": "Amirsali",
         "github": "https://github.com/muhallimir"
+      },
+      "eas": {
+        "projectId": "43087935-83ea-4a1f-847b-2c803e1cd270"
       }
-    }
+    },
+    "owner": "amirsali"
   }
 }
