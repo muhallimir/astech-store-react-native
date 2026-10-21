@@ -85,3 +85,6 @@ dist/
 
 # Environment files
 .env*
+
+# Recorded demo videos, the scripts that produce them are tracked
+demos/**/*.mp4

@@ -1,0 +1,9 @@
+intro	Welcome to the Astech Store mobile app, built with React Native and Expo. One codebase ships to iOS, Android and the web, and this tour runs in the browser.
+home	The home screen is a searchable catalogue with a category strip on top and a two column grid of products with prices and ratings.
+filter	Tapping a category filters the grid in place, and the search box filters on top of it.
+product	Tapping a product opens the detail screen, with the photos, the price, the reviews, and a wishlist heart you can toggle.
+cart	The cart keeps the line items, the quantity steppers and the total, and it is persisted so it survives a restart.
+end	One React Native codebase, running on iOS, on Android, and on the web.
+filler-a	One moment, this is loading.
+filler-b	Almost there.
+filler-c	Here we go.
