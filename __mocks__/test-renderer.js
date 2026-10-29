@@ -1,32 +1,34 @@
 const TestRenderer = require('react-test-renderer');
 
-// Shim createRoot for React 19 compatibility
-// @testing-library/react-native v14 expects testRenderer.createRoot(container, options)
-// But react-test-renderer 19 doesn't export createRoot directly
+// Shim for @testing-library/react-native v14 with React 19
+// @testing-library/react-native calls testRenderer.createRoot(container, options)
+// which should return an object with .render(element) and .unmount() methods
+// The .render() should return a test renderer instance that @testing-library can add query methods to
 
 module.exports = {
-  ...require('react-test-renderer'),
+  ...TestRenderer,
+  
+  // @testing-library/react-native calls this
   createRoot: (container, options) => {
-    let currentElement = null;
+    let testRendererInstance = null;
     
     return {
       render: (element) => {
-        // Use TestRenderer.create which is the actual API
-        const testRenderer = require('react-test-renderer');
-        if (currentElement) {
-          // Update existing tree
-          testRenderer.act(() => {
-            // TestRenderer doesn't have update, need to recreate
-          });
-        }
-        return testRenderer.create(element, {
+        // Create the test renderer instance
+        testRendererInstance = TestRenderer.create(element, {
           createNodeMock: options?.createNodeMock,
         });
+        // Return the test renderer instance so @testing-library can add query methods
+        return testRendererInstance;
       },
       unmount: () => {
-        // TestRenderer instances don't have explicit unmount
-        // The instance is garbage collected
+        if (testRendererInstance) {
+          testRendererInstance.unmount();
+        }
       },
     };
   },
+  
+  act: TestRenderer.act,
+  create: TestRenderer.create,
 };
