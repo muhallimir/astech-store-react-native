@@ -6,7 +6,7 @@ import { listProducts } from '../actions/productActions';
 import Loader from './Loader';
 
 
-export default function Products({ search = '', category = 'All' }) {
+export default function Products({ search = '', category = 'All', sortBy = 'featured' }) {
 
     const dispatch = useDispatch();
 
@@ -23,12 +23,25 @@ export default function Products({ search = '', category = 'All' }) {
             return [];
         }
         const term = search.trim().toLowerCase();
-        return products.filter((product) => {
+        let filtered = products.filter((product) => {
             const matchesCategory = !category || category === 'All' || product.category === category;
             const matchesSearch = !term || (product.name && product.name.toLowerCase().includes(term));
             return matchesCategory && matchesSearch;
         });
-    }, [products, search, category]);
+        // Apply sort
+        if (sortBy && sortBy !== 'featured') {
+            filtered = [...filtered].sort((a, b) => {
+                switch (sortBy) {
+                    case 'price_asc': return (a.price || 0) - (b.price || 0);
+                    case 'price_desc': return (b.price || 0) - (a.price || 0);
+                    case 'rating': return (b.rating || 0) - (a.rating || 0);
+                    case 'name': return (a.name || '').localeCompare(b.name || '');
+                    default: return 0;
+                }
+            });
+        }
+        return filtered;
+    }, [products, search, category, sortBy]);
 
     return (
         <SafeAreaView style={styles.container}>

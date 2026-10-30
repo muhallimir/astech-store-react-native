@@ -1,12 +1,17 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import Categories from "../components/Categories";
 import Carousel from "../components/Carousel";
 import Products from "../components/Products";
-import { ScrollView, TextInput, TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { ScrollView, TextInput, TouchableOpacity, View, Text, StyleSheet, Animated } from "react-native";
 import data from "../utils/data";
+import FlashSaleBar from "../components/FlashSaleBar";
+import TopRatedSpotlight from "../components/TopRatedSpotlight";
+import BackToTopButton from "../components/BackToTopButton";
+import SearchSuggestionsBar from "../components/SearchSuggestionsBar";
+import { SORT_OPTIONS, sortProducts } from "../utils/sortSelect";
 
 const ALL = "All";
 
@@ -25,7 +30,15 @@ const deriveCategories = () => {
 const HomeScreen = () => {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState(ALL);
+  const [sort, setSort] = useState("featured");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const scrollViewRef = useRef(null);
   const categories = useMemo(() => deriveCategories(), []);
+
+  const handleBackToTop = () => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -36,7 +49,21 @@ const HomeScreen = () => {
           placeholder="Search products"
           placeholderTextColor="#6b7280"
           value={search}
-          onChangeText={setSearch}
+          onChangeText={(text) => {
+            setSearch(text);
+            setShowSuggestions(true);
+          }}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+        />
+        <SearchSuggestionsBar
+          products={data.products}
+          query={search}
+          onSearch={(q) => {
+            setSearch(q);
+            setShowSuggestions(false);
+          }}
+          visible={showSuggestions}
         />
       </View>
       <ScrollView
@@ -59,11 +86,35 @@ const HomeScreen = () => {
           );
         })}
       </ScrollView>
-      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+      <View style={styles.sortRow}>
+        <Text style={styles.sortLabel}>Sort by:</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.sortChips}>
+          {SORT_OPTIONS.map((opt) => (
+            <TouchableOpacity
+              key={opt.key}
+              onPress={() => setSort(opt.key)}
+              style={[styles.sortChip, sort === opt.key && styles.sortChipActive]}
+            >
+              <Text style={[styles.sortChipText, sort === opt.key && styles.sortChipTextActive]}>
+                {opt.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+      <ScrollView
+        ref={scrollViewRef}
+        contentContainerStyle={{ paddingBottom: 100 }}
+        onScroll={(e) => setScrollY(e.nativeEvent.contentOffset.y)}
+        scrollEventThrottle={16}
+      >
+        <FlashSaleBar saleEndTime={new Date(Date.now() + 3600000 * 2)} discountPercent={20} />
         <Carousel />
+        <TopRatedSpotlight products={data.products} onProductPress={() => {}} />
         <Categories />
-        <Products search={search} category={activeCategory} />
+        <Products search={search} category={activeCategory} sortBy={sort} />
       </ScrollView>
+      <BackToTopButton scrollY={scrollY} onPress={handleBackToTop} />
     </SafeAreaView>
   );
 };
@@ -75,6 +126,8 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 8,
     backgroundColor: "#ffffff",
+    position: 'relative',
+    zIndex: 100,
   },
   searchInput: {
     borderWidth: 1,
@@ -116,6 +169,41 @@ const styles = StyleSheet.create({
   chipLabelInactive: {
     color: "#475569",
   },
+  sortRow: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: "#ffffff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e2e8f0",
+  },
+  sortLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#64748b',
+    marginBottom: 4,
+  },
+  sortChips: {
+    gap: 8,
+  },
+  sortChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    backgroundColor: '#f1f5f9',
+    marginRight: 6,
+  },
+  sortChipActive: {
+    backgroundColor: '#1e3a8a',
+  },
+  sortChipText: {
+    fontSize: 12,
+    color: '#475569',
+    fontWeight: '500',
+  },
+  sortChipTextActive: {
+    color: '#ffffff',
+  },
 });
 
 export default HomeScreen;
+EOF
