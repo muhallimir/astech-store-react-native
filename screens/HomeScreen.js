@@ -69,29 +69,32 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  safe: { backgroundColor: "#ffffff", flex: 1 },
+  safe: { backgroundColor: "#f8fafc", flex: 1 },
   searchWrap: {
     paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 4,
+    paddingTop: 12,
+    paddingBottom: 8,
     backgroundColor: "#ffffff",
   },
   searchInput: {
     borderWidth: 1,
-    borderColor: "#d1d5db",
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    color: "#000000",
+    borderColor: "#e2e8f0",
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    color: "#0f172a",
+    fontSize: 15,
+    backgroundColor: "#f1f5f9",
   },
   chipRow: {
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 10,
+    backgroundColor: "#ffffff",
   },
   chip: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
     marginRight: 8,
     borderWidth: 1,
   },
@@ -100,18 +103,18 @@ const styles = StyleSheet.create({
     borderColor: "#1e3a8a",
   },
   chipInactive: {
-    backgroundColor: "#ffffff",
-    borderColor: "#d1d5db",
+    backgroundColor: "#f1f5f9",
+    borderColor: "#e2e8f0",
   },
   chipLabel: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "600",
   },
   chipLabelActive: {
     color: "#ffffff",
   },
   chipLabelInactive: {
-    color: "#1e3a8a",
+    color: "#475569",
   },
 });
 

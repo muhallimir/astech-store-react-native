@@ -44,51 +44,53 @@ const Header = () => {
         <>
             <WarningModal message={'This will sign you out. Would you like to continue?'} handleSignOut={handleSignOut} setIsOpenModal={setIsOpenModal} isOpenModal={isOpenModal} />
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => navigateToHome()}>
+                <TouchableOpacity onPress={() => navigateToHome()} style={styles.logoWrapper}>
                     <Image source={Logo} style={styles.logo} />
                 </TouchableOpacity>
-                <View style={styles.column}>
-                    <Text style={styles.smallLabel}>Hello</Text>
-                    {userInfo?.name ? (<TouchableOpacity onPress={() => setIsOpenModal(true)}>
-                        <Text style={styles.boldLabel}>{userInfo?.name}</Text>
-                    </TouchableOpacity>) : (<TouchableOpacity onPress={navigateToSignIn}>
-                        <Text style={styles.boldLabel}>Sign in</Text>
-                    </TouchableOpacity>)}
-                </View>
-                <View style={styles.column}>
-                    <Text style={styles.smallLabel}>Manage</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.boldLabel}>Profile</Text>
-                    </TouchableOpacity>
-                </View>
-                {isAdmin ? <View style={styles.column}>
-                    <Text style={styles.smallLabel}>Admin</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.boldLabel}>Access</Text>
-                    </TouchableOpacity>
-                </View> :
+                <View style={styles.navSection}>
                     <View style={styles.column}>
-                        <Text style={styles.smallLabel}>Order</Text>
-                        <TouchableOpacity onPress={() => navigateToOrderHistory()}>
-                            <Text style={styles.boldLabel}>History</Text>
+                        <Text style={styles.smallLabel}>Hello</Text>
+                        {userInfo?.name ? (<TouchableOpacity onPress={() => setIsOpenModal(true)}>
+                            <Text style={styles.boldLabel}>{userInfo?.name}</Text>
+                        </TouchableOpacity>) : (<TouchableOpacity onPress={navigateToSignIn}>
+                            <Text style={styles.boldLabel}>Sign in</Text>
+                        </TouchableOpacity>)}
+                    </View>
+                    <View style={styles.column}>
+                        <Text style={styles.smallLabel}>Manage</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.boldLabel}>Profile</Text>
                         </TouchableOpacity>
                     </View>
-                }
-                <View style={styles.cartWrapper}>
-                    {cartItems.length > 0 && <Text style={styles.cartBadge}>{cartItems.length}</Text>}
-                    <TouchableOpacity onPress={() => navigateToCart()}>
-                        <ShoppingCartIcon size={32} color='white' />
-                    </TouchableOpacity>
+                    {isAdmin ? <View style={styles.column}>
+                        <Text style={styles.smallLabel}>Admin</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.boldLabel}>Access</Text>
+                        </TouchableOpacity>
+                    </View> :
+                        <View style={styles.column}>
+                            <Text style={styles.smallLabel}>Order</Text>
+                            <TouchableOpacity onPress={() => navigateToOrderHistory()}>
+                                <Text style={styles.boldLabel}>History</Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
                 </View>
-                <View style={styles.wishlistWrapper}>
-                    {wishlistItems.length > 0 && <Text style={styles.wishlistBadge}>{wishlistItems.length}</Text>}
-                    <TouchableOpacity>
-                        <Text style={styles.wishlistIcon}>{'\u2764'}</Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <TouchableOpacity>
-                        <SearchIcon size={31} color='white' />
+                <View style={styles.iconSection}>
+                    <View style={styles.cartWrapper}>
+                        {cartItems.length > 0 && <Text style={styles.cartBadge}>{cartItems.length}</Text>}
+                        <TouchableOpacity onPress={() => navigateToCart()} style={styles.iconButton}>
+                            <ShoppingCartIcon size={24} color='white' />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.wishlistWrapper}>
+                        {wishlistItems.length > 0 && <Text style={styles.wishlistBadge}>{wishlistItems.length}</Text>}
+                        <TouchableOpacity style={styles.iconButton}>
+                            <Text style={styles.wishlistIcon}>{'\u2764'}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.iconButton}>
+                        <SearchIcon size={24} color='white' />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -100,58 +102,95 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#1e3a8a',
-        paddingVertical: 8,
-        height: 48,
-        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 12,
+        minHeight: 64,
+        justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+        elevation: 4,
+    },
+    logoWrapper: {
+        marginRight: 8,
     },
     logo: {
-        height: 28,
-        width: 128,
+        height: 32,
+        width: 120,
         resizeMode: 'contain',
-        marginLeft: 4,
-        marginTop: 4,
-        marginRight: 8,
+    },
+    navSection: {
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'center',
+        gap: 12,
     },
     column: {
         alignItems: 'center',
+        paddingHorizontal: 4,
     },
     smallLabel: {
-        color: '#ffffff',
-        fontSize: 12,
+        color: 'rgba(255,255,255,0.7)',
+        fontSize: 10,
+        marginBottom: 2,
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
     },
     boldLabel: {
         color: '#ffffff',
-        fontWeight: 'bold',
+        fontWeight: '600',
+        fontSize: 13,
+    },
+    iconSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
+    iconButton: {
+        padding: 6,
     },
     cartWrapper: {
-        paddingTop: 2,
+        position: 'relative',
     },
     cartBadge: {
         position: 'absolute',
         zIndex: 10,
-        left: 32,
-        bottom: 24,
-        fontSize: 12,
+        top: -4,
+        right: -4,
+        fontSize: 10,
         color: '#ffffff',
         fontWeight: 'bold',
+        backgroundColor: '#dc2626',
+        borderRadius: 10,
+        minWidth: 18,
+        height: 18,
+        textAlign: 'center',
+        lineHeight: 18,
+        paddingHorizontal: 4,
     },
     wishlistWrapper: {
-        paddingTop: 2,
-        marginLeft: 12,
+        position: 'relative',
     },
     wishlistBadge: {
         position: 'absolute',
         zIndex: 10,
-        left: 20,
-        bottom: 24,
-        fontSize: 12,
+        top: -4,
+        right: -4,
+        fontSize: 10,
         color: '#ffffff',
         fontWeight: 'bold',
+        backgroundColor: '#dc2626',
+        borderRadius: 10,
+        minWidth: 18,
+        height: 18,
+        textAlign: 'center',
+        lineHeight: 18,
+        paddingHorizontal: 4,
     },
     wishlistIcon: {
-        fontSize: 28,
+        fontSize: 20,
         color: '#ffffff',
     },
 });
