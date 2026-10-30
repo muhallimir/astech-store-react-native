@@ -81,6 +81,16 @@ jobs:
           name: web-build
           path: dist/
 
+      - name: Link Vercel project
+        run: |
+          mkdir -p .vercel
+          cat > .vercel/project.json << 'EOF'
+          {
+            "projectId": "prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M",
+            "orgId": "team_amirsalis-projects"
+          }
+          EOF
+
       - name: Deploy to Vercel Preview
         run: |
           mkdir -p .vercel/output/static
@@ -113,6 +123,16 @@ jobs:
         with:
           name: web-build
           path: dist/
+
+      - name: Link Vercel project
+        run: |
+          mkdir -p .vercel
+          cat > .vercel/project.json << 'EOF'
+          {
+            "projectId": "prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M",
+            "orgId": "team_amirsalis-projects"
+          }
+          EOF
 
       - name: Deploy to Vercel Production
         run: |
