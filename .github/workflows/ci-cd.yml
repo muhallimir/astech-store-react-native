@@ -107,7 +107,7 @@ jobs:
       - name: Deploy to Vercel Production
         run: |
           cd dist
-          npx vercel@latest deploy --prod --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} --project=prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M .
+          npx vercel@latest deploy --prod --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} --project=prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M --no-build .
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         working-directory: ./
