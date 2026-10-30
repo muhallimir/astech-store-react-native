@@ -2,11 +2,12 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import { useNavigation } from "@react-navigation/core";
 import Rating from './Rating';
-
-
+import CompareButton from './CompareButton';
+import { useCompare } from '../contexts/CompareContext';
 
 export default function ProductCard({ products }) {
     const navigation = useNavigation();
+    const { toggle, isInComparison, canAddMore } = useCompare();
 
     const navigateToProductScreen = (product) => {
         navigation.navigate('ProductScreen', { productId: product?._id })
@@ -27,6 +28,12 @@ export default function ProductCard({ products }) {
                             <Rating numReviews={product?.numReviews} rating={product?.rating} />
                         </View>
                     </TouchableOpacity>
+                    <CompareButton
+                        product={product}
+                        isSelected={isInComparison(product?._id)}
+                        disabled={!isInComparison(product?._id) && !canAddMore()}
+                        onToggle={toggle}
+                    />
                 </View>
             )) : <Text style={styles.empty}>No products found</Text>}
         </View>

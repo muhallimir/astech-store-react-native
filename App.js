@@ -13,7 +13,7 @@ import ShippingScreen from './screens/ShippingScreen';
 import SignInScreen from './screens/SignInScreen';
 import store from './store';
 import { WebviewScreen } from './screens/WebViewScreen';
-
+import { CompareProvider } from './contexts/CompareContext';
 
 export default function App() {
 
@@ -22,28 +22,30 @@ export default function App() {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <Stack.Navigator>
-          <Stack.Group screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="ProductScreen" component={ProductScreen} />
-            <Stack.Screen name="CartScreen" component={CartScreen} />
-            <Stack.Screen name="SignIn" component={SignInScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="Shipping" component={ShippingScreen} />
-            <Stack.Screen name="Payment" component={PaymentScreen} />
-            <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
-            <Stack.Screen name="OrderHistory" component={OrderHitoryScreen} />
-            <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
-          </Stack.Group>
-          <Stack.Group
-            screenOptions={{
-              headerShown: false,
-              presentation: "modal",
-            }}
-          >
-            <Stack.Screen name="WebView" component={WebviewScreen} />
-          </Stack.Group>
-        </Stack.Navigator>
+        <CompareProvider>
+          <Stack.Navigator>
+            <Stack.Group screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="ProductScreen" component={ProductScreen} />
+              <Stack.Screen name="CartScreen" component={CartScreen} />
+              <Stack.Screen name="SignIn" component={SignInScreen} />
+              <Stack.Screen name="Register" component={RegisterScreen} />
+              <Stack.Screen name="Shipping" component={ShippingScreen} />
+              <Stack.Screen name="Payment" component={PaymentScreen} />
+              <Stack.Screen name="PlaceOrder" component={PlaceOrderScreen} />
+              <Stack.Screen name="OrderHistory" component={OrderHitoryScreen} />
+              <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
+            </Stack.Group>
+            <Stack.Group
+              screenOptions={{
+                headerShown: false,
+                presentation: "modal",
+              }}
+            >
+              <Stack.Screen name="WebView" component={WebviewScreen} />
+            </Stack.Group>
+          </Stack.Navigator>
+        </CompareProvider>
       </Provider>
     </NavigationContainer>
   );
