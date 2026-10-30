@@ -83,9 +83,11 @@ jobs:
 
       - name: Deploy to Vercel Preview
         run: |
+          npx vercel@latest link --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} --project=prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M --yes
           npx vercel@latest deploy --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} dist/
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        working-directory: ./
 
   deploy-production:
     name: Deploy Production to Vercel
@@ -104,6 +106,9 @@ jobs:
 
       - name: Deploy to Vercel Production
         run: |
+          # Link the project first (creates .vercel/project.json)
+          npx vercel@latest link --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} --project=prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M --yes
+          # Deploy to production
           npx vercel@latest deploy --prod --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} dist/
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
