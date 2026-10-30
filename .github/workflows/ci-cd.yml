@@ -149,6 +149,7 @@ jobs:
           echo "URL: https://astech-store-react-native-94fo.vercel.app"
 
   deploy-expo:
+    continue-on-error: true
     name: Deploy to Expo (Optional)
     runs-on: ubuntu-latest
     needs: build-web
