@@ -83,7 +83,8 @@ jobs:
 
       - name: Deploy to Vercel Preview
         run: |
-          npx vercel@latest deploy --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} --project=prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M dist/
+          cd dist
+          npx vercel@latest deploy --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} --project=prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M .
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         working-directory: ./
@@ -103,26 +104,10 @@ jobs:
           name: web-build
           path: dist/
 
-      - name: Deploy to Vercel Production (via API)
+      - name: Deploy to Vercel Production
         run: |
-          # Create a zip of the dist folder
           cd dist
-          zip -r ../deployment.zip .
-          cd ..
-          
-          # Deploy via Vercel API
-          curl -X POST "https://api.vercel.com/v13/deployments" \
-            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d @- << 'EOF'
-          {
-            "name": "astech-store-react-native",
-            "projectId": "prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M",
-            "target": "production",
-            "githubDeploymentEnabled": false,
-            "files": $(cd dist && find . -type f -name '*' | jq -R . | jq -s 'map({file: ., data: (input | @base64)}) | from_entries')
-          }
-          EOF
+          npx vercel@latest deploy --prod --scope=amirsalis-projects --token=${{ secrets.VERCEL_TOKEN }} --project=prj_9eLioyPtkAJMAhl9YQGxtEQIqA1M .
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         working-directory: ./
