@@ -47,51 +47,33 @@ const Header = () => {
                 <TouchableOpacity onPress={() => navigateToHome()} style={styles.logoWrapper}>
                     <Image source={Logo} style={styles.logo} />
                 </TouchableOpacity>
-                <View style={styles.navSection}>
-                    <View style={styles.column}>
-                        <Text style={styles.smallLabel}>Hello</Text>
-                        {userInfo?.name ? (<TouchableOpacity onPress={() => setIsOpenModal(true)}>
-                            <Text style={styles.boldLabel}>{userInfo?.name}</Text>
-                        </TouchableOpacity>) : (<TouchableOpacity onPress={navigateToSignIn}>
-                            <Text style={styles.boldLabel}>Sign in</Text>
-                        </TouchableOpacity>)}
+                <View style={styles.rightSection}>
+                    <View style={styles.userSection}>
+                        <Text style={styles.greeting}>Hello,</Text>
+                        {userInfo?.name ? (
+                            <TouchableOpacity onPress={() => setIsOpenModal(true)}>
+                                <Text style={styles.userName} numberOfLines={1}>{userInfo?.name}</Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity onPress={navigateToSignIn}>
+                                <Text style={styles.userName}>Sign in</Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
-                    <View style={styles.column}>
-                        <Text style={styles.smallLabel}>Manage</Text>
-                        <TouchableOpacity>
-                            <Text style={styles.boldLabel}>Profile</Text>
+                    <View style={styles.iconRow}>
+                        <TouchableOpacity onPress={() => navigateToOrderHistory()} style={styles.iconButton}>
+                            <Text style={styles.iconLabel}>Orders</Text>
                         </TouchableOpacity>
-                    </View>
-                    {isAdmin ? <View style={styles.column}>
-                        <Text style={styles.smallLabel}>Admin</Text>
-                        <TouchableOpacity>
-                            <Text style={styles.boldLabel}>Access</Text>
-                        </TouchableOpacity>
-                    </View> :
-                        <View style={styles.column}>
-                            <Text style={styles.smallLabel}>Order</Text>
-                            <TouchableOpacity onPress={() => navigateToOrderHistory()}>
-                                <Text style={styles.boldLabel}>History</Text>
+                        <View style={styles.cartWrapper}>
+                            {cartItems.length > 0 && <Text style={styles.cartBadge}>{cartItems.length}</Text>}
+                            <TouchableOpacity onPress={() => navigateToCart()} style={styles.iconButton}>
+                                <ShoppingCartIcon size={22} color='white' />
                             </TouchableOpacity>
                         </View>
-                    }
-                </View>
-                <View style={styles.iconSection}>
-                    <View style={styles.cartWrapper}>
-                        {cartItems.length > 0 && <Text style={styles.cartBadge}>{cartItems.length}</Text>}
-                        <TouchableOpacity onPress={() => navigateToCart()} style={styles.iconButton}>
-                            <ShoppingCartIcon size={24} color='white' />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.wishlistWrapper}>
-                        {wishlistItems.length > 0 && <Text style={styles.wishlistBadge}>{wishlistItems.length}</Text>}
                         <TouchableOpacity style={styles.iconButton}>
-                            <Text style={styles.wishlistIcon}>{'\u2764'}</Text>
+                            <SearchIcon size={22} color='white' />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.iconButton}>
-                        <SearchIcon size={24} color='white' />
-                    </TouchableOpacity>
                 </View>
             </View>
         </>
@@ -102,9 +84,9 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#1e3a8a',
-        paddingVertical: 12,
+        paddingVertical: 10,
         paddingHorizontal: 12,
-        minHeight: 64,
+        minHeight: 56,
         justifyContent: 'space-between',
         alignItems: 'center',
         shadowColor: '#000',
@@ -117,39 +99,45 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     logo: {
-        height: 32,
-        width: 120,
+        height: 30,
+        width: 100,
         resizeMode: 'contain',
     },
-    navSection: {
-        flexDirection: 'row',
+    rightSection: {
         flex: 1,
-        justifyContent: 'center',
-        gap: 12,
-    },
-    column: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingHorizontal: 4,
+        gap: 8,
     },
-    smallLabel: {
-        color: 'rgba(255,255,255,0.7)',
-        fontSize: 10,
-        marginBottom: 2,
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
-    },
-    boldLabel: {
-        color: '#ffffff',
-        fontWeight: '600',
-        fontSize: 13,
-    },
-    iconSection: {
+    userSection: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
+        marginRight: 8,
+    },
+    greeting: {
+        color: 'rgba(255,255,255,0.7)',
+        fontSize: 12,
+    },
+    userName: {
+        color: '#ffffff',
+        fontWeight: '600',
+        fontSize: 13,
+        maxWidth: 80,
+    },
+    iconRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 2,
     },
     iconButton: {
         padding: 6,
+    },
+    iconLabel: {
+        color: '#ffffff',
+        fontSize: 11,
+        fontWeight: '500',
     },
     cartWrapper: {
         position: 'relative',
@@ -164,34 +152,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         backgroundColor: '#dc2626',
         borderRadius: 10,
-        minWidth: 18,
-        height: 18,
+        minWidth: 16,
+        height: 16,
         textAlign: 'center',
-        lineHeight: 18,
-        paddingHorizontal: 4,
-    },
-    wishlistWrapper: {
-        position: 'relative',
-    },
-    wishlistBadge: {
-        position: 'absolute',
-        zIndex: 10,
-        top: -4,
-        right: -4,
-        fontSize: 10,
-        color: '#ffffff',
-        fontWeight: 'bold',
-        backgroundColor: '#dc2626',
-        borderRadius: 10,
-        minWidth: 18,
-        height: 18,
-        textAlign: 'center',
-        lineHeight: 18,
-        paddingHorizontal: 4,
-    },
-    wishlistIcon: {
-        fontSize: 20,
-        color: '#ffffff',
+        lineHeight: 16,
+        paddingHorizontal: 3,
     },
 });
 
